@@ -5,7 +5,7 @@ import { storage } from './fireBase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const configuration = new Configuration({
-  apiKey: process.env.REACT_APP_API_KEY
+  apiKey: process.env.REACT_APP_OAI_API_KEY
 });
 
   
@@ -21,7 +21,7 @@ export const openAIGeneration = async (prompt) => {
   });
 
   // url is the url from openAI
-  console.log(result)
+  // console.log(result)
   const urlOpenAI = result.data.data[0].url;
   let finalUrl = ''
 

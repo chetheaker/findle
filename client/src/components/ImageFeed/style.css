@@ -1,0 +1,15 @@
+.list_scroll{
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 5vh;
+  padding-left: 5vw;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.list_title{
+  font-size: 1.6em;
+  font-weight: 500;
+  margin-bottom: 20px;
+  padding-left: 5vw;
+}

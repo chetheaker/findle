@@ -1,20 +1,56 @@
 import './App.css';
-import { useState } from 'react'
+import { firestore } from './fireBase'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useEffect, useState } from 'react'
 
 // import components
-import CreateImage from './components/CreateImage';
-import ImageFeed from './components/ImageFeed';
-import Cloudinary from './cloudinary';
+import Navbar from './components/Navbar/Navbar';
+import CreateImage from './components/CreateImage/CreateImage';
+import ImageFeed from './components/ImageFeed/ImageFeed';
+import ImageCard from './components/ImageCard/ImageCard';
 
 function App() {
   const [images, setImages] = useState([])
-  console.log(process.env.REACT_APP_API_KEY)
-  //const [promt, setPromt] = useState({promtInput: ''})
+  const [contests, setContests] = useState([])
+
+/*   const imagesRef = firestore.collection('images');
+  const query = imagesRef.orderBy('createdAt', 'desc');
+  const imagesArray = useCollectionData(query, { idField: 'id' });
+  console.log(imagesArray) */
+
+  const fetchImages = async () => {
+    
+
+
+
+
+    await firestore.collection('images').get().then((querySnapshot) =>{
+      console.log(querySnapshot)
+      querySnapshot.forEach(element => {
+        let data = element.data();
+        console.log('data is:', data)
+        setImages(arr=> [...arr, data])
+      })
+    })
+  };
+
+ 
+  useEffect(()=> {
+    fetchImages().catch(console.error);
+  }, [])
 
   return (
     <div className="App">
-      <CreateImage></CreateImage>
-      <ImageFeed images={images} setImages={setImages}></ImageFeed>
+      <Navbar/>
+      <CreateImage fetchImages={fetchImages}></CreateImage>
+      <ImageFeed>
+        {images.map((image)=>(
+          <ImageCard
+          image={image}
+          key={image.data.asset_id}
+          />
+        ))}
+      </ImageFeed>
     </div>
   );
 }

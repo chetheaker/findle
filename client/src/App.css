@@ -1,0 +1,24 @@
+.App{
+  display:flex;
+  flex-direction: column;
+  align-content: space-around
+}
+
+.navBar{
+  display:flex;
+  flex-direction:row;
+  background-color: #040404 ;
+  justify-content: space-between;
+  padding: 2rem;
+}
+.logo img{
+  max-width: 10em;
+}
+
+.searchBar{
+  color:white;
+  align-self:center;
+}
+.container{
+  overflow-x: scroll;
+}

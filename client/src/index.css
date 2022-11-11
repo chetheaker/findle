@@ -1,13 +1,33 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  font-weight: 400;
+  background: #111;
+  color: white;
+  font-family: Avenir;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+a, a:active, a:visited, a:focus, a:hover{
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button, button:active, button:visited, button:focus, button:hover{
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: Avenir;
+}
+
+input, input:active, input:visited, input:focus{
+  outline: none;
+  font-family: Avenir;
+}
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+input:-webkit-autofill{
+  -webkit-box-shadow: 0 0 0 50px white inset,
 }

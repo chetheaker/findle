@@ -1,0 +1,67 @@
+.movie_container{
+  height: 50vh;
+  width: 300px;
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+}
+
+.movie_img{
+  width: 300px;
+}
+
+.movie_headline{
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(188, 10, 198, 0) 0%, #000D 100%);;
+  box-sizing: border-box;
+  padding: 0 10px;
+  transition: all .4s ease;
+  text-align: center;
+}
+
+.cut-text { 
+  text-overflow: ellipsis;
+  overflow: hidden; 
+  height: 1.2em;
+  white-space: nowrap;
+  transition: all .4s ease;
+}
+
+.movie_headline_title{
+  width: 70%;
+  height: 100%;
+}
+
+.movie_container:hover .cut-text {
+  text-overflow: unset;
+  overflow: unset; 
+  white-space: unset;
+}
+
+.movie_headline_btn, 
+.movie_headline_btn:hover, 
+.movie_headline_btn:focus{
+  background: none;
+  color: white;
+  border: 1px solid white;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  align-self: flex-end;
+  margin-bottom: 10px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-weight: 100;
+  font-size: 1.1em;
+}
+
+.movie_container:hover .movie_headline_btn,
+.movie_headline_btn--active {
+  display: flex;
+}
