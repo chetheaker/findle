@@ -8,9 +8,9 @@ const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASEKEY,
   authDomain: process.env.REACT_APP_FIREBASEURL,
   projectId: "trinity1-6d22d",
-  storageBucket: "trinity1-6d22d.appspot.com",
-  messagingSenderId: "904774931337",
-  appId: "1:904774931337:web:50cdc9bf3989fbc6a70758"
+  storageBucket: process.env.REACT_APP_FBSTORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_FBMESSAGESENDID,
+  appId: process.env.REACT_APP_FBAPPID
 }
 
 const app = firebase.initializeApp(firebaseConfig)

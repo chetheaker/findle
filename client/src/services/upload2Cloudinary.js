@@ -1,12 +1,12 @@
 import Axios from 'axios'
 
 export const upload2Cloudinary = async (urlFromOpenAIParam) => {
-  const url = "https://api.cloudinary.com/v1_1/ds7c3iooy/image/upload";
+  const url = process.env.REACT_APP_COUDINARYURL;
   let cloudinaryImgData = {};
  
   const formData = new FormData();
   formData.append('file', urlFromOpenAIParam);
-  formData.append('upload_preset', 'xywexqzm')
+  formData.append('upload_preset', process.env.REACT_APP_COUDINARYKEY)
   console.log(formData);
 
   await Axios.post(url, formData).then((response) => {

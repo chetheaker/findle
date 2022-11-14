@@ -16,7 +16,7 @@ import ImageCard from './components/ImageCard/ImageCard';
 function App() {
   const [images, setImages] = useState([])
   const [user] = useAuthState(auth);
-  console.log(user)
+  // console.log(user)
 
   useEffect(()=> {
     fetchImages().catch(console.error);

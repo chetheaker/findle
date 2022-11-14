@@ -18,11 +18,8 @@ function CreateImage({fetchImages}, user) {
 
   const imagesRef = firestore.collection('images');
   const contestsRef = firestore.collection('contests');
-  let currentContest;
-  let latestContestDate;
-  let latestContestExpDate;
 
-  console.log(user);
+  // console.log(user);
 
   useEffect(()=> {
     fetchContest().catch(console.error);
@@ -38,26 +35,6 @@ function CreateImage({fetchImages}, user) {
     })
 
   };
-  currentContest = contests[0]
-  console.log(currentContest)
-  contests.length ? console.log(currentContest.expirationDate) : console.log("undefined ?")
-
-/*   const createNewContest = async () => {
-    if (contests[0] && contests[0].expirationDate < Date.now()) {
-      let rand3Words = await randomWordAPI()
-      let rand3WordsFlat = rand3Words.flat()
-      console.log(rand3WordsFlat);
-      await contestsRef.add({
-        random3Words: rand3WordsFlat,
-        expirationDate: firebase.firestore.Timestamp.now().toMillis() + 1.08e+7,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      console.log('new contest created successfully!')
-      window.location.reload(false);
-    } else {
-      console.log('current contest still on game on');
-    } 
-  } */
 
   createNewContest1(contests)
   
@@ -71,6 +48,7 @@ function CreateImage({fetchImages}, user) {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       url: cloudinaryImgData.secure_url,
       data: cloudinaryImgData,
+      // TODO: include the user id and the 2 words array
       //user.uid,
     })
     fetchImages()
@@ -81,7 +59,7 @@ function CreateImage({fetchImages}, user) {
     <>
       <div className='promptInput'>
         <h1 className='h1WC'> 
-          Trinity generates 3 random words. <br></br>
+          Trinity generates 2 random words. <br></br>
           You create an AI-based image with a prompt. <br></br> 
           (must include the words) <br></br> 
           The coolest image wins! <br></br>
@@ -95,9 +73,8 @@ function CreateImage({fetchImages}, user) {
                 <h1><Timer expirationDate={ contests.length ? contests[0].expirationDate : 0} ></Timer></h1>
               </div>
               <div className='word3Container'>
-                <div className='word1'>{ contests.length ? contests[0].random3Words[0] : '' }</div>
-                <div className='word2'>{ contests.length ? contests[0].random3Words[1] : '' }</div>
-                <div className='word3'>{ contests.length ? contests[0].random3Words[2] : '' }</div>
+                <div className='word1'>{ contests.length ? contests[0].random2Words[0] : '' }</div>
+                <div className='word2'>{ contests.length ? contests[0].random2Words[1] : '' }</div>
               </div>            
            </div>
           </div>

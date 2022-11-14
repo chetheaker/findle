@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-// import { createNewContest2 } from '../.././services/createNewContest'
 
 const Timer = (props) => {
   const [days, setDays] = useState(0);
