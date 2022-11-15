@@ -7,8 +7,6 @@ const configuration = new Configuration({
 const openai = new  OpenAIApi(configuration);
 
 export const openAIGeneration = async (prompt) => {
-  console.log(process.env.REACT_APP_API_KEY)
-  console.log(prompt)
   const result = await openai.createImage({
     prompt,
     n:1,
@@ -16,10 +14,6 @@ export const openAIGeneration = async (prompt) => {
   });
 
   const urlOpenAI = result.data.data[0].url;
-  let finalUrl = ''
 
-  console.log(urlOpenAI);
-
-  console.log(finalUrl);
   return urlOpenAI
 };

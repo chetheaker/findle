@@ -1,0 +1,55 @@
+.counter {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  row-gap: 20px;
+  font-family: Avenir;
+  margin: 1%;
+}
+
+.likeContainer {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  background-color: #fdff39;;
+  padding: 1%;
+  margin: 4%;
+  margin-top: 0%;
+  margin-bottom: 0%;
+  border-radius: 5px;
+  width: 80%;
+  height: 40px;
+  border: 0;
+  align-self: center;
+  width: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+
+
+}
+
+.counterOutput {
+  font-size: 30px;
+  color: rgb(255, 255, 255);
+  font-family: Avenir;
+}
+
+
+.likeButton {
+  max-width: 30px;
+  max-height: 30px;
+  cursor: pointer;
+  margin: 3%;
+}
+
+.likeButton:hover {
+  background-color: rgba(56, 232, 255, 0.801);
+  border-radius: 30px;
+  color: rgba(41, 244, 255, 0.801);
+  border: 1px solid rgba(53, 248, 255, 0.801);
+  
+}
+

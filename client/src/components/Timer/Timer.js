@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { createNewContest1 } from '../../services/createNewContest';
 
 const Timer = (props) => {
   const [days, setDays] = useState(0);
@@ -13,8 +14,8 @@ const Timer = (props) => {
 
   const getTime = () => {
     const time = props.expirationDate - Date.now();
-    // console.log(time)
     if (time < 0){
+      createNewContest1();
       // return window.location.reload(false);
       //createNewContest2(time);
     }

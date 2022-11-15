@@ -2,6 +2,8 @@ import './style.css';
 import 'firebase/compat/firestore';
 
 import firebase from 'firebase/compat/app';
+import { auth } from '../../services/fireBaseInit'
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { useState, useEffect } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
@@ -10,61 +12,51 @@ import { openAIGeneration } from '../../services/generateOpAI'
 import { upload2Cloudinary } from '../../services/upload2Cloudinary'
 import { randomWordAPI } from '../../services/randomWordAPI'
 import { createNewContest1 } from '../../services/createNewContest';
+import Spinner from '../Spinner/Spinner'
 
 import Timer from '../Timer/Timer';
 
-function CreateImage({fetchImages}, user) {
-  const [contests, setContests] = useState([]);
-
+function CreateImage({fetchImages, contests, user}) {
+  const [spinner, setSpinner] = useState(true);
   const imagesRef = firestore.collection('images');
   const contestsRef = firestore.collection('contests');
 
-  // console.log(user);
-
-  useEffect(()=> {
-    fetchContest().catch(console.error);
-  }, [])
-
-  const fetchContest = async () => {
-    setContests([])
-    await firestore.collection('contests').orderBy("createdAt", "desc").get().then((querySnapshot) =>{
-      querySnapshot.forEach(element => {
-        let data = element.data();
-        setContests(arr=> [...arr, data])
-      })
-    })
-
-  };
-
-  createNewContest1(contests)
-  
   const generateImage = async (event) => {
     event.preventDefault();
+
+    // CHECKS: IF PROMPT CONTAINS THE 2 REQUIRED WORDS
+    if (event.target.newPrompt.value.includes(contests[0].random2Words[0]) && event.target.newPrompt.value.includes(contests[0].random2Words[1])) {
+
+    // GETS IMAGE´S OPENAI URL, THEN UPLOAD IMAGE TO CLOUDINARY
     let openAIURL = await openAIGeneration(event.target.newPrompt.value)
     let cloudinaryImgData = await upload2Cloudinary(openAIURL);
     
+    // UPLOADS: IMAGE AND IMAGE INFO TO FIREBASE
     await imagesRef.add({
       usedPrompt: event.target.newPrompt.value,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       url: cloudinaryImgData.secure_url,
       data: cloudinaryImgData,
-      // TODO: include the user id and the 2 words array
-      //user.uid,
+      userName: user.displayName,
+      userId: user.uid,
+      contestIdRef: contests[0].contestId,
+      contestWord1: contests[0].random2Words[0],
+      contestWord2: contests[0].random2Words[1],
+      likesReceived: 0,
+      usersWhoLiked: []
     })
+
     fetchImages()
     event.target.reset();
+  } else {
+    alert('you promt does not include the 2 words')
+  }
   };
 
   return (
     <>
+     { !contests.length ? <Spinner /> : 
       <div className='promptInput'>
-        <h1 className='h1WC'> 
-          Trinity generates 2 random words. <br></br>
-          You create an AI-based image with a prompt. <br></br> 
-          (must include the words) <br></br> 
-          The coolest image wins! <br></br>
-        </h1>
-
         <div className='card2'>
           <div className='container2'>
             <div className='card3'>
@@ -84,39 +76,9 @@ function CreateImage({fetchImages}, user) {
           </form>
         </div>
       </div>
+      }
     </>
 
   )
 }
 export default CreateImage;
-
-
-
-
-
-  /*     if (contestsArray[0]) {
-      setContest([])
-      currentContest = contestsArray[0][0]
-      console.log(currentContest)
-      setContest([currentContest])
-      console.log()
-      latestContestDate = contestsArray[0][0].createdAt.toDate()
-      latestContestExpDate = moment(contestsArray[0][0].expirationDate) 
-    } */
-
-
-    /*   useEffect(()=> {
-    fetchImages().catch(console.error);
-  }, [])
-
-  const fetchContest = async () => {
-    if (contestsArray[0]) {
-      setContest([])
-      currentContest = contestsArray[0][0]
-      console.log(currentContest)
-      setContest([currentContest])
-      console.log()
-      latestContestDate = contestsArray[0][0].createdAt.toDate()
-      latestContestExpDate = moment(contestsArray[0][0].expirationDate) 
-    }
-  }; */

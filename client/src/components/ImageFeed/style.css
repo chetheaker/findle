@@ -5,6 +5,7 @@
   padding-left: 5vw;
   overflow-y: hidden;
   overflow-x: auto;
+
 }
 
 .list_title{
@@ -12,4 +13,19 @@
   font-weight: 500;
   margin-bottom: 20px;
   padding-left: 5vw;
+}
+
+.feedContainer{
+  box-shadow: 5px 5px 8px 1px rgba(255, 255, 255, 0.363);
+  transition: 0.3s;
+  background-color: #282828cb;;
+  padding: 1%;
+  margin: 2%;
+  margin-top: 4%;
+
+  border-radius: 5px;
+
+  border: 0;
+  align-self: center;
+  overflow-x: auto;
 }

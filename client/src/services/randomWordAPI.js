@@ -78,7 +78,7 @@ const allCharacters = [
   "Teacher",
   "Doctor",
   "Soldier",
-  "Polic officer",
+  "Police officer",
   "Firefighter",
   "Business man",
   "Veterinarian",
