@@ -61,8 +61,7 @@ function CreateImage({fetchImages, contests, user}) {
           <div className='container2'>
             <div className='card3'>
               <div className='timerDiv'>
-                <h1>This contest will end in </h1>
-                <h1><Timer expirationDate={ contests.length ? contests[0].expirationDate : 0} ></Timer></h1>
+                <h1>This contest will end in: <Timer expirationDate={ contests.length ? contests[0].expirationDate : 0} ></Timer> </h1>
               </div>
               <div className='word3Container'>
                 <div className='word1'>{ contests.length ? contests[0].random2Words[0] : '' }</div>
@@ -71,7 +70,7 @@ function CreateImage({fetchImages, contests, user}) {
            </div>
           </div>
           <form className='promptForm' onSubmit={generateImage}>
-            <input name='newPrompt' placeholder='Write your promt here. Be creative.' type="text" required></input>
+            <input name='newPrompt' placeholder='Write your promt. Be creative.' type="text" required></input>
             <button>Create Image</button>
           </form>
         </div>

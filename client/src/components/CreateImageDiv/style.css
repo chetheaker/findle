@@ -114,6 +114,7 @@ button:active {
   width: 80%;
   border: 0;
   align-self: center;
+  min-width: 360px;
 }
 
 .card3 {
