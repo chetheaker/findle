@@ -22,3 +22,5 @@ const SignIn:React.FC<Props> = ({auth}) => {
       </>
     );
   }
+
+export default SignIn;
