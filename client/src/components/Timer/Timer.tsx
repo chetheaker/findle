@@ -6,29 +6,32 @@ type TimerProps = {
 };
 
 const Timer = ({ expirationDate }: TimerProps) => {
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
+  const [remainingSeconds, setRemainingSeconds] = useState(0);
 
   useEffect(() => {
     const getTime = () => {
       const time = expirationDate - Date.now();
-
-      setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
-      setMinutes(Math.floor((time / 1000 / 60) % 60));
-      setSeconds(Math.floor((time / 1000) % 60));
+      setRemainingSeconds(Math.floor(time / 1000));
     };
     const interval = setInterval(() => getTime(), 1000);
     return () => clearInterval(interval);
-  }, [seconds, expirationDate]);
+  }, [remainingSeconds, expirationDate]);
 
-  return (
-    <div className="timer">
-      {hours >= 0 ? `${hours} hours ` : ''}
-      {minutes >= 0 ? `${minutes} mins ` : ''}
-      {seconds >= 0 ? `${seconds} sec ` : ''}
-    </div>
-  );
+  const formatTime = () => {
+    const hours = Math.floor(remainingSeconds / (60 * 60)) % 24;
+    const mins = Math.floor(remainingSeconds / 60) % 60;
+    const seconds = Math.floor(remainingSeconds % 60);
+
+    if (hours === 0 && mins === 0) {
+      return `${seconds} seconds`;
+    } else if (hours === 0) {
+      return `${mins} minutes ${seconds}`;
+    } else {
+      return `${hours} hours ${mins} minutes ${seconds} seconds`;
+    }
+  };
+
+  return <div className="timer">{formatTime()}</div>;
 };
 
 export default Timer;
