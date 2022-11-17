@@ -3,7 +3,7 @@ import 'firebase/compat/firestore';
 
 import firebase from 'firebase/compat/app';
 
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { firestore } from '../../services/fireBaseInit';
 import { openAIGeneration } from '../../services/generateOpAI';
 import { upload2Cloudinary } from '../../services/upload2Cloudinary';
@@ -11,33 +11,41 @@ import Spinner from '../Spinner/Spinner';
 
 import Timer from '../Timer/Timer';
 
-type GenerateImage = {
-  preventDefault: () => void;
-  target: { newPrompt: { value: string | any[] }; reset: () => void };
+type CreateImageProps = {
+  fetchImages: () => void;
+  contests: firebase.firestore.DocumentData[];
+  user: any;
 };
 
-function CreateImage({ fetchImages, contests, user }) {
+interface CloudinaryData {
+  secure_url: string;
+}
+
+function CreateImage({ fetchImages, contests, user }: CreateImageProps) {
   const [isFetching, setIsFetching] = useState(false);
+  const [promptInput, setPromptInput] = useState('');
   const imagesRef = firestore.collection('images');
 
-  const generateImage = async (event: GenerateImage) => {
+  const generateImage = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsFetching(true);
 
     // CHECKS: IF PROMPT CONTAINS THE 2 REQUIRED WORDS
     if (
-      event.target.newPrompt.value.includes(contests[0].random2Words[0]) &&
-      event.target.newPrompt.value.includes(contests[0].random2Words[1])
+      promptInput.includes(contests[0].random2Words[0]) &&
+      promptInput.includes(contests[0].random2Words[1])
     ) {
       // GETS IMAGE´S OPENAI URL, THEN UPLOAD IMAGE TO CLOUDINARY
-      let openAIURL = await openAIGeneration(event.target.newPrompt.value);
-      let cloudinaryImgData = await upload2Cloudinary(openAIURL);
+      let openAIURL = (await openAIGeneration(promptInput)) as string;
+      let cloudinaryImgData = (await upload2Cloudinary(
+        openAIURL
+      )) as CloudinaryData;
       console.log('img data', cloudinaryImgData);
 
       // UPLOADS: IMAGE AND IMAGE INFO TO FIREBASE
       try {
         await imagesRef.add({
-          usedPrompt: event.target.newPrompt.value,
+          usedPrompt: promptInput,
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           url: cloudinaryImgData.secure_url,
           data: cloudinaryImgData,
@@ -54,7 +62,7 @@ function CreateImage({ fetchImages, contests, user }) {
       }
 
       fetchImages();
-      event.target.reset();
+      setPromptInput('');
       setIsFetching(false);
     } else {
       alert('you promt does not include the 2 words');
@@ -92,10 +100,10 @@ function CreateImage({ fetchImages, contests, user }) {
             </div>
             <form className="promptForm" onSubmit={generateImage}>
               <input
-                name="newPrompt"
                 placeholder="Write your promt. Be creative."
                 type="text"
                 required
+                onChange={(e) => setPromptInput(e.target.value)}
               ></input>
               <button>{isFetching ? <Spinner /> : 'Create Image'}</button>
             </form>
