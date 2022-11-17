@@ -5,20 +5,18 @@ import { firestore } from './services/fireBaseInit';
 import { auth } from './services/fireBaseInit';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
 
 // import components
 import Navbar from './components/Navbar/Navbar';
 import CreateImage from './components/CreateImageDiv/CreateImageDiv';
 import ImageFeed from './components/ImageFeed/ImageFeed';
 import ImageCard from './components/ImageCard/ImageCard';
-import Spinner from './components/Spinner/Spinner';
+
 
 function App() {
   const [images, setImages] = useState<firebase.firestore.DocumentData[]>([]);
   const [user] = useAuthState(auth as any);
   const [contests, setContests] = useState<firebase.firestore.DocumentData[]>([]);
-  const [spinner, setSpinner] = useState(false);
 
   // FETCH IMAGES
   useEffect(() => {
@@ -67,7 +65,7 @@ function App() {
         <ToastContainer />
        </div> */}
 
-      <Navbar>{/* {} */}</Navbar>
+      <Navbar></Navbar>
 
       <SignOut/>
       <h1 className="h1WC">
@@ -94,8 +92,9 @@ function App() {
                         image={image}
                         key={image.data.asset_id}
                       ></ImageCard>
-                    );
-                  }
+                    )
+                  } 
+                  return (<></>);
                 })}
               </ImageFeed>
             ))}
@@ -137,20 +136,3 @@ function SignOut() {
 }
 
 export default App;
-
-{
-  /* 
-          
-       {/*  <h1>{contest.random2Words[0] + contest.random2Words[1]}</h1> */
-}
-
-{
-  /*         <ImageFeed>
-          {images.map((image)=>(
-            <ImageCard
-            image={image}
-            key={image.data.asset_id}
-            />
-          ))}
-        </ImageFeed> */
-}
