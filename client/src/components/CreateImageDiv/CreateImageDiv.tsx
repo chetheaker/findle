@@ -7,8 +7,6 @@ import { useState } from 'react';
 import { firestore } from '../../services/fireBaseInit';
 import { openAIGeneration } from '../../services/generateOpAI';
 import { upload2Cloudinary } from '../../services/upload2Cloudinary';
-import { randomWordAPI } from '../../services/randomWordAPI';
-import { createNewContest1 } from '../../services/createNewContest';
 import Spinner from '../Spinner/Spinner';
 
 import Timer from '../Timer/Timer';
