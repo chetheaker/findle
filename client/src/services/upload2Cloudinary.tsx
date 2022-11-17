@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
-export const upload2Cloudinary = async (aiUrl) => {
-  const url = process.env.REACT_APP_CLOUDINARY_URL;
+export const upload2Cloudinary = async (aiUrl: string) => {
+  const url: string = process.env.REACT_APP_CLOUDINARY_URL;
   let cloudinaryImgData = {};
 
   const formData = new FormData();
