@@ -12,11 +12,12 @@ import CreateImage from './components/CreateImageDiv/CreateImageDiv';
 import ImageFeed from './components/ImageFeed/ImageFeed';
 import ImageCard from './components/ImageCard/ImageCard';
 
-
 function App() {
   const [images, setImages] = useState<firebase.firestore.DocumentData[]>([]);
   const [user] = useAuthState(auth as any);
-  const [contests, setContests] = useState<firebase.firestore.DocumentData[]>([]);
+  const [contests, setContests] = useState<firebase.firestore.DocumentData[]>(
+    []
+  );
 
   // FETCH IMAGES
   useEffect(() => {
@@ -67,7 +68,7 @@ function App() {
 
       <Navbar></Navbar>
 
-      <SignOut/>
+      <SignOut />
       <h1 className="h1WC">
         Trinity generates 2 random words. <br></br>
         You create an AI-based image with a prompt. <br></br>
@@ -92,9 +93,9 @@ function App() {
                         image={image}
                         key={image.data.asset_id}
                       ></ImageCard>
-                    )
-                  } 
-                  return (<></>);
+                    );
+                  }
+                  return <></>;
                 })}
               </ImageFeed>
             ))}
