@@ -12,8 +12,6 @@ export const openAIGeneration = async (prompt) => {
     n: 1,
     size: '1024x1024'
   });
-
   const urlOpenAI = result.data.data[0].url;
-
   return urlOpenAI;
 };
