@@ -6,7 +6,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-export const openAIGeneration = async (prompt) => {
+export const openAIGeneration = async (prompt: string) => {
   const result = await openai.createImage({
     prompt,
     n: 1,

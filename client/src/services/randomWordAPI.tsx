@@ -1,6 +1,5 @@
 export const randomWordAPI = async () => {
-  //const url = "https://random-word-api.herokuapp.com/word";
-  let wordsArray = [];
+  let wordsArray: string[] = [];
 
   const character =
     allCharacters[Math.floor(Math.random() * allCharacters.length)];
@@ -12,10 +11,8 @@ export const randomWordAPI = async () => {
 };
 
 const allCharacters = [
-  // fictional characters
   'Super-Man',
   'Batman',
-  'Hitler',
   'Harry Potter',
   'Iron Man',
   'Spider-Man',
@@ -62,7 +59,6 @@ const allCharacters = [
   'Parrot',
   'Mouse',
 
-  // generic subjects
   'Astronaut',
   'Artist',
   'Soccer Player',
@@ -126,57 +122,3 @@ const allMoods = [
   'sexy',
   'seductive'
 ];
-
-/*   // random word 1
-  await Axios({
-    method: 'GET',
-    url: 'https://api.api-ninjas.com/v1/randomword?type=noun',
-    headers: { 'X-Api-Key': 'cj7dbHsyhK8jII1JrbcsRw==NQerittrwUauA8NG'},
-    contentType: 'application/json',
-    success: function(result) {
-        console.log(result);
-    },
-    error: function ajaxError(jqXHR) {
-        console.error('Error: ', jqXHR.responseText);
-    }
-    
-    }).then((response) => {
-      wordsArray = [...wordsArray, response.data.word]
-    })
-   
-  // random word 2
-  await Axios({
-    method: 'GET',
-    url: 'https://api.api-ninjas.com/v1/randomword?type=verb',
-    headers: { 'X-Api-Key': 'cj7dbHsyhK8jII1JrbcsRw==NQerittrwUauA8NG'},
-    contentType: 'application/json',
-    success: function(result) {
-        console.log(result);
-    },
-    error: function ajaxError(jqXHR) {
-        console.error('Error: ', jqXHR.responseText);
-    }
-    
-    }).then((response) => {
-      wordsArray = [...wordsArray, response.data.word]
-    })
-
-    
-    
-    // random word 3
-    await Axios({
-    method: 'GET',
-    url: 'https://api.api-ninjas.com/v1/randomword?type=adjective',
-    headers: { 'X-Api-Key': 'cj7dbHsyhK8jII1JrbcsRw==NQerittrwUauA8NG'},
-    contentType: 'application/json',
-    success: function(result) {
-        console.log(result);
-    },
-    error: function ajaxError(jqXHR) {
-        console.error('Error: ', jqXHR.responseText);
-    }
-    
-    }).then((response) => {
-      wordsArray = [...wordsArray, response.data.word]
-    })
- */
