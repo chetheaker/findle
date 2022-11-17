@@ -2,11 +2,8 @@ import './style.css';
 import 'firebase/compat/firestore';
 
 import firebase from 'firebase/compat/app';
-import { auth } from '../../services/fireBaseInit';
-import { useAuthState } from 'react-firebase-hooks/auth';
 
-import { useState, useEffect } from 'react';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useState } from 'react';
 import { firestore } from '../../services/fireBaseInit';
 import { openAIGeneration } from '../../services/generateOpAI';
 import { upload2Cloudinary } from '../../services/upload2Cloudinary';
@@ -16,13 +13,18 @@ import Spinner from '../Spinner/Spinner';
 
 import Timer from '../Timer/Timer';
 
-function CreateImage({ fetchImages, contests, user }) {
-  const [spinner, setSpinner] = useState(true);
-  const imagesRef = firestore.collection('images');
-  const contestsRef = firestore.collection('contests');
+type GenerateImage = {
+  preventDefault: () => void;
+  target: { newPrompt: { value: string | any[] }; reset: () => void };
+};
 
-  const generateImage = async (event) => {
+function CreateImage({ fetchImages, contests, user }) {
+  const [isFetching, setIsFetching] = useState(false);
+  const imagesRef = firestore.collection('images');
+
+  const generateImage = async (event: GenerateImage) => {
     event.preventDefault();
+    setIsFetching(true);
 
     // CHECKS: IF PROMPT CONTAINS THE 2 REQUIRED WORDS
     if (
@@ -53,8 +55,9 @@ function CreateImage({ fetchImages, contests, user }) {
         console.log('error', e);
       }
 
-      // fetchImages();
-      // event.target.reset();
+      fetchImages();
+      event.target.reset();
+      setIsFetching(false);
     } else {
       alert('you promt does not include the 2 words');
     }
@@ -96,7 +99,7 @@ function CreateImage({ fetchImages, contests, user }) {
                 type="text"
                 required
               ></input>
-              <button>Create Image</button>
+              <button>{isFetching ? <Spinner /> : 'Create Image'}</button>
             </form>
           </div>
         </div>
