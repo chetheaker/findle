@@ -63,7 +63,6 @@ function App() {
        </div> */}
   
       <Navbar>
-        {/* <SignOut /> */}
       </Navbar>
         
 
