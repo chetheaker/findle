@@ -2,8 +2,14 @@ import { useState, useEffect } from 'react';
 import './style.css';
 import { firestore } from '../../services/fireBaseInit';
 import { increment, arrayRemove, arrayUnion } from 'firebase/firestore';
+import { User } from 'firebase/auth'
+import firebase from 'firebase/compat';
 
-export default function LikeButton({ image, user }) {
+type Props = {
+  user: User
+  image: firebase.firestore.DocumentData
+}
+const LikeButton:React.FC<Props> = ({image, user}) => {
   const [counter, setCounter] = useState(image.likesReceived || 0);
   const [liked, setLiked] = useState(false);
 
@@ -49,3 +55,5 @@ export default function LikeButton({ image, user }) {
     </div>
   );
 }
+
+export default LikeButton;
