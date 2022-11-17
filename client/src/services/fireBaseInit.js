@@ -5,16 +5,16 @@ import 'firebase/compat/storage';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASEKEY,
-  authDomain: process.env.REACT_APP_FIREBASEURL,
-  projectId: "trinity1-6d22d",
-  storageBucket: process.env.REACT_APP_FBSTORAGEBUCKET,
-  messagingSenderId: process.env.REACT_APP_FBMESSAGESENDID,
-  appId: process.env.REACT_APP_FBAPPID
-}
+  apiKey: process.env.REACT_APP_FB_API_KEY,
+  authDomain: process.env.REACT_APP_FB_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FB_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FB_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FB_MESSAGE_SEND_ID,
+  appId: process.env.REACT_APP_FB_APP_ID
+};
 
-const app = firebase.initializeApp(firebaseConfig)
+const app = firebase.initializeApp(firebaseConfig);
 
-export const storage = getStorage(app)
+export const storage = getStorage(app);
 export const firestore = firebase.firestore();
 export const auth = firebase.auth();
