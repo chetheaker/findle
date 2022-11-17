@@ -15,9 +15,9 @@ import ImageCard from './components/ImageCard/ImageCard';
 import Spinner from './components/Spinner/Spinner';
 
 function App() {
-  const [images, setImages] = useState([]);
-  const [user] = useAuthState(auth);
-  const [contests, setContests] = useState([]);
+  const [images, setImages] = useState<firebase.firestore.DocumentData[]>([]);
+  const [user] = useAuthState(auth as any);
+  const [contests, setContests] = useState<firebase.firestore.DocumentData[]>([]);
   const [spinner, setSpinner] = useState(false);
 
   // FETCH IMAGES
@@ -69,7 +69,7 @@ function App() {
 
       <Navbar>{/* {} */}</Navbar>
 
-      <SignOut className="signOutButton" />
+      <SignOut/>
       <h1 className="h1WC">
         Trinity generates 2 random words. <br></br>
         You create an AI-based image with a prompt. <br></br>
