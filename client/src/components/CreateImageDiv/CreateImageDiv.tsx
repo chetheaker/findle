@@ -2,7 +2,7 @@ import './style.css';
 import 'firebase/compat/firestore';
 
 import firebase from 'firebase/compat/app';
-
+import { fetchImages } from '../../services/FireStore';
 import { FormEvent, useState } from 'react';
 import { firestore } from '../../services/fireBaseInit';
 import { openAIGeneration } from '../../services/generateOpAI';
@@ -12,7 +12,7 @@ import Spinner from '../Spinner/Spinner';
 import Timer from '../Timer/Timer';
 
 type CreateImageProps = {
-  fetchImages: () => void;
+  setImages: React.Dispatch<React.SetStateAction<firebase.firestore.DocumentData[]>>;
   contests: firebase.firestore.DocumentData[];
   user: any;
 };
@@ -21,7 +21,7 @@ interface CloudinaryData {
   secure_url: string;
 }
 
-function CreateImage({ fetchImages, contests, user }: CreateImageProps) {
+function CreateImage({ setImages, contests, user }: CreateImageProps) {
   const [isFetching, setIsFetching] = useState(false);
   const [promptInput, setPromptInput] = useState('');
   const imagesRef = firestore.collection('images');
@@ -61,7 +61,7 @@ function CreateImage({ fetchImages, contests, user }: CreateImageProps) {
         console.log('error', e);
       }
 
-      fetchImages();
+      fetchImages(setImages);
       setPromptInput('');
       setIsFetching(false);
     } else {

@@ -5,12 +5,15 @@ import { firestore } from './services/fireBaseInit';
 import { auth } from './services/fireBaseInit';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useEffect, useState } from 'react';
+import { fetchImages } from './services/FireStore';
 
 // import components
 import Navbar from './components/Navbar/Navbar';
 import CreateImage from './components/CreateImageDiv/CreateImageDiv';
 import ImageFeed from './components/ImageFeed/ImageFeed';
 import ImageCard from './components/ImageCard/ImageCard';
+import SignOut from './components/SignOut/SignOut';
+import SignIn from './components/SignIn/SignIn';
 
 function App() {
   const [images, setImages] = useState<firebase.firestore.DocumentData[]>([]);
@@ -21,23 +24,9 @@ function App() {
 
   // FETCH IMAGES
   useEffect(() => {
-    fetchImages().catch(console.error);
+    fetchImages(setImages);
   }, []);
 
-  const fetchImages = async () => {
-    setImages([]);
-    await firestore
-      .collection('images')
-      .orderBy('likesReceived', 'desc')
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((element) => {
-          let data = element.data();
-          data.imageId = element.id;
-          setImages((arr) => [...arr, data]);
-        });
-      });
-  };
 
   //FETCH CONTESTS
   useEffect(() => {
@@ -68,7 +57,7 @@ function App() {
 
       <Navbar></Navbar>
 
-      <SignOut />
+      <SignOut auth={auth}/>
       <h1 className="h1WC">
         Trinity generates 2 random words. <br></br>
         You create an AI-based image with a prompt. <br></br>
@@ -79,7 +68,7 @@ function App() {
         {user ? (
           <>
             <CreateImage
-              fetchImages={fetchImages}
+              setImages={setImages}
               contests={contests}
               user={user}
             ></CreateImage>
@@ -101,39 +90,12 @@ function App() {
             ))}
           </>
         ) : (
-          <SignIn />
+          <SignIn auth={auth}/>
         )}
       </section>
     </div>
   );
 }
 
-function SignIn() {
-  const signInWithGoogle = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    await auth.signInWithPopup(provider);
-  };
-
-  return (
-    <>
-      <div className="signInDiv">
-        <button className="signInButton" onClick={signInWithGoogle}>
-          {' '}
-          Sign in with Google{' '}
-        </button>
-      </div>
-    </>
-  );
-}
-
-function SignOut() {
-  return (
-    auth.currentUser && (
-      <button className="signOutButton" onClick={() => auth.signOut()}>
-        SignOut
-      </button>
-    )
-  );
-}
 
 export default App;
