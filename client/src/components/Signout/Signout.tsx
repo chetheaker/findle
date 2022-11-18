@@ -1,4 +1,3 @@
-import './style.css';
 import { auth } from '../../services/fireBaseInit';
 import { Button } from '@chakra-ui/react';
 
