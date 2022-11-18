@@ -1,15 +1,20 @@
+import './Navbar.css';
 import HowToModal from '../HowToModal/HowToModal';
-import './style.css';
+import SignOut from '../SignOut/SignOut';
+import SignIn from '../SignIn/SignIn';
 
-const Navbar:React.FC = () => (
-  <div className="navbar">
-    <img
-      className="navbar_logo"
-      src="../../assets/trinity.png"
-      alt="netflix logo"
-    />
-    <HowToModal/>
-  </div>
-);
+type NavbarProps = {
+  user: any;
+};
+
+function Navbar({ user }: NavbarProps) {
+  return (
+    <div className="navbar">
+      <HowToModal />
+      <h1>TRINITY</h1>
+      {user ? <SignOut /> : <SignIn />}
+    </div>
+  );
+}
 
 export default Navbar;

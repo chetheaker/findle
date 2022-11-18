@@ -1,26 +1,15 @@
 import firebase from 'firebase/compat/app';
+import { auth } from '../../services/fireBaseInit';
+import { Button } from '@chakra-ui/react';
 import './style.css';
 
-type Props = {
-  auth: any;
-};
-
-const SignIn: React.FC<Props> = ({ auth }) => {
+const SignIn: React.FC = () => {
   const signInWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     await auth.signInWithPopup(provider);
   };
 
-  return (
-    <>
-      <div className="signInDiv">
-        <button className="signInButton" onClick={signInWithGoogle}>
-          {' '}
-          Sign in with Google{' '}
-        </button>
-      </div>
-    </>
-  );
+  return <Button onClick={signInWithGoogle}>Sign In</Button>;
 };
 
 export default SignIn;
