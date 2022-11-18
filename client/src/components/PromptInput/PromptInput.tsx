@@ -7,7 +7,11 @@ function PromptInput() {
   const [promptInput, setPromptInput] = useState('');
 
   function processPromptInput() {
+    setIsFetching(true);
+    console.log(promptInput);
+    setIsFetching(false);
   }
+
   return (
     <form className="promptForm" onSubmit={processPromptInput}>
     <input
@@ -16,7 +20,7 @@ function PromptInput() {
       required
       onChange={(e) => setPromptInput(e.target.value)}
     ></input>
-    <button>{isFetching ? <Spinner /> : <>{console.log(promptInput)}</>}</button>
+    <button>{isFetching ? <Spinner /> : 'Guess'}</button>
   </form>
   )
 }
