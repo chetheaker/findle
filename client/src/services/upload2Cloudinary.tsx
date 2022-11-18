@@ -6,7 +6,10 @@ export const upload2Cloudinary = async (aiUrl: string) => {
 
   const formData = new FormData();
   formData.append('file', aiUrl);
-  formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_KEY as string);
+  formData.append(
+    'upload_preset',
+    process.env.REACT_APP_CLOUDINARY_KEY as string
+  );
 
   await Axios.post(url, formData)
     .then((response) => {
@@ -16,20 +19,3 @@ export const upload2Cloudinary = async (aiUrl: string) => {
 
   return cloudinaryImgData;
 };
-
-/* function Cloudinary2() {
-  const [imageSelected, setImageSelected] = useState('');
-  return (
-    <div>
-      <input
-      type='file' onChange={(event) => {
-        setImageSelected(event.target.files[0])
-      }}
-      />
-      <button onClick={upImageToCloudinary}> Upload Image </button>
-
-    </div>
-  );
-} */
-
-// export default Cloudinary2;
