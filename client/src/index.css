@@ -7,27 +7,36 @@ body {
   font-family: Avenir;
 }
 
-a, a:active, a:visited, a:focus, a:hover{
+a,
+a:active,
+a:visited,
+a:focus,
+a:hover {
   text-decoration: none;
   cursor: pointer;
 }
 
-button, button:active, button:visited, button:focus, button:hover{
+button {
+  font-family: Avenir;
+}
+
+button:active,
+button:visited,
+button:focus,
+button:hover {
   cursor: pointer;
   border: none;
   outline: none;
-  font-family: Avenir;
 }
 
-input, input:active, input:visited, input:focus{
+input,
+input:active,
+input:visited,
+input:focus {
   outline: none;
   font-family: Avenir;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   display: none;
-}
-
-input:-webkit-autofill{
-  -webkit-box-shadow: 0 0 0 50px white inset,
 }
