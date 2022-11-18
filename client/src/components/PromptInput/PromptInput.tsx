@@ -16,15 +16,16 @@ function PromptInput() {
 
   return (
     <form className="promptForm" onSubmit={processPromptInput}>
-    <input
-      placeholder="Your prompt goes here"
-      type="text"
-      required
-      onChange={(e) => setPromptInput(e.target.value)}
-    ></input>
-    <Button>{isFetching ? <Spinner /> : 'Guess'}</Button>
-  </form>
-  )
+      <input
+        placeholder="Your prompt goes here"
+        type="text"
+        required
+        className="prompt-input"
+        onChange={(e) => setPromptInput(e.target.value)}
+      ></input>
+      <Button>{isFetching ? <Spinner /> : 'Guess'}</Button>
+    </form>
+  );
 }
 
 export default PromptInput;

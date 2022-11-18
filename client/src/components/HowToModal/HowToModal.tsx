@@ -24,9 +24,17 @@ const HowToModal: React.FC = () => {
           <ModalHeader>How to play</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <div>
-              Trinity generates 2 random words You create an AI-based image with
-              a prompt. (must include the words) The coolest image wins!
+            <div className="modal-body">
+              Trinity gives you a pixelated AI generated image made by DALL-E
+              from Open AI and you have to guess the keywords used in the prompt
+              to generate the image.
+              <br />
+              <br />
+              With each guess the image becomes less pixelated and you get hints
+              to guess the prompt.
+              <br />
+              <br />
+              At the end you will be able to see your own AI generated image
             </div>
           </ModalBody>
         </ModalContent>
