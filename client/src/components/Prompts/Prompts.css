@@ -1,0 +1,22 @@
+.prompts {
+  color: white;
+  margin: 1rem;
+}
+
+.prompts .unknown {
+  color: black;
+  background-color: white;
+  text-shadow: none;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+}
+
+.prompts .known {
+  color: white;
+  background-color: #38a169;
+  text-shadow: none;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+}
