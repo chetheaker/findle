@@ -1,14 +1,14 @@
-import React from 'react';
+import HowToModal from '../HowToModal/HowToModal';
 import './style.css';
 
-const Navbar = () => (
+const Navbar:React.FC = () => (
   <div className="navbar">
     <img
       className="navbar_logo"
       src="../../assets/trinity.png"
       alt="netflix logo"
     />
-    <h1>Trinity.Ai</h1>
+    <HowToModal/>
   </div>
 );
 
