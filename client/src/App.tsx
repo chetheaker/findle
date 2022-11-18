@@ -5,7 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { ChakraProvider } from '@chakra-ui/react';
 
 // import components
-import Contest from './components/Contest/Contest'
+import Contest from './components/Contest/Contest';
 import Navbar from './components/Navbar/Navbar';
 import SignOut from './components/SignOut/SignOut';
 import SignIn from './components/SignIn/SignIn';
@@ -18,13 +18,7 @@ function App() {
       <div className="App">
         <Navbar />
         <SignOut auth={auth} />
-        <section className="section1">
-          {user ? (
-          <Contest/>
-          ) : (
-            <SignIn auth={auth} />
-          )}
-        </section>
+        {user ? <Contest /> : <SignIn auth={auth} />}
       </div>
     </ChakraProvider>
   );

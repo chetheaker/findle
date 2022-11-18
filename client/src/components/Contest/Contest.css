@@ -1,0 +1,6 @@
+.contest {
+  display: grid;
+  width: 100%;
+  place-items: center;
+  gap: 1rem;
+}

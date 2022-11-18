@@ -1,4 +1,6 @@
-import {useState} from 'react';
+import { useState } from 'react';
+import './PromptInput.css';
+import { Button } from '@chakra-ui/react';
 
 import Spinner from '../Spinner/Spinner';
 
@@ -14,15 +16,16 @@ function PromptInput() {
 
   return (
     <form className="promptForm" onSubmit={processPromptInput}>
-    <input
-      placeholder="Write your promt. Be creative."
-      type="text"
-      required
-      onChange={(e) => setPromptInput(e.target.value)}
-    ></input>
-    <button>{isFetching ? <Spinner /> : 'Guess'}</button>
-  </form>
-  )
+      <input
+        placeholder="Write your promt. Be creative."
+        type="text"
+        className="prompt-input"
+        required
+        onChange={(e) => setPromptInput(e.target.value)}
+      ></input>
+      <Button>{isFetching ? <Spinner /> : 'Guess'}</Button>
+    </form>
+  );
 }
 
 export default PromptInput;
