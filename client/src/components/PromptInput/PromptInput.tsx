@@ -15,7 +15,7 @@ function PromptInput() {
   return (
     <form className="promptForm" onSubmit={processPromptInput}>
     <input
-      placeholder="Write your promt. Be creative."
+      placeholder=""
       type="text"
       required
       onChange={(e) => setPromptInput(e.target.value)}
