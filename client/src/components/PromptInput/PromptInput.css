@@ -12,7 +12,8 @@
   padding: 0 0.5rem;
   border-radius: inherit;
   background: none;
-  border: solid 1px #a7a7a7;
+  border: solid 1px #6e7d93;
+  color: #6e7d93;
 }
 
 .prompt-input::placeholder {
