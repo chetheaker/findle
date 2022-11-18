@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import './PromptInput.css';
 import { Button } from '@chakra-ui/react';
+import './PromptInput.css';
 
 import Spinner from '../Spinner/Spinner';
 
@@ -22,7 +22,7 @@ function PromptInput() {
       required
       onChange={(e) => setPromptInput(e.target.value)}
     ></input>
-    <button>{isFetching ? <Spinner /> : 'Guess'}</button>
+    <Button>{isFetching ? <Spinner /> : 'Guess'}</Button>
   </form>
   )
 }
