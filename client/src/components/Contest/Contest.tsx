@@ -4,8 +4,10 @@ import firebase from 'firebase/compat/app';
 
 import ImageCard from '../ImageCard/ImageCard';
 import PromptInput from '../PromptInput/PromptInput';
+import Spinner from '../Spinner/Spinner';
 
 function Contest() {
+  const [isFetching, setIsFetching] = useState(true);
   const [images, setImages] = useState<firebase.firestore.DocumentData[]>([]);
   const [contests, setContest] = useState<firebase.firestore.DocumentData[]>(
     []
@@ -13,9 +15,16 @@ function Contest() {
 
   // FETCH IMAGES AND CONTEST
   useEffect(() => {
-    fetchImages(setImages);
-    fetchContest(setContest);
+    const fetchContestandImage = async () => {
+      await fetchImages(setImages);
+      await fetchContest(setContest);
+      setIsFetching(false);
+    };
+
+    fetchContestandImage();
   }, []);
+
+  if (isFetching) return <Spinner />;
 
   return (
     <>
