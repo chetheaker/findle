@@ -72,6 +72,7 @@ function CreateImage({ setImages, contests, user }: CreateImageProps) {
       setIsFetching(false);
     } else {
       alert('you promt does not include the 2 words');
+      setIsFetching(false);
     }
   };
 
