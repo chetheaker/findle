@@ -15,7 +15,7 @@ function PromptInput() {
   return (
     <form className="promptForm" onSubmit={processPromptInput}>
     <input
-      placeholder=""
+      placeholder="Your prompt goes here"
       type="text"
       required
       onChange={(e) => setPromptInput(e.target.value)}
