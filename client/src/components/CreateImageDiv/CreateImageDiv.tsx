@@ -12,7 +12,9 @@ import Spinner from '../Spinner/Spinner';
 import Timer from '../Timer/Timer';
 
 type CreateImageProps = {
-  setImages: React.Dispatch<React.SetStateAction<firebase.firestore.DocumentData[]>>;
+  setImages: React.Dispatch<
+    React.SetStateAction<firebase.firestore.DocumentData[]>
+  >;
   contests: firebase.firestore.DocumentData[];
   user: any;
 };
@@ -32,8 +34,12 @@ function CreateImage({ setImages, contests, user }: CreateImageProps) {
 
     // CHECKS: IF PROMPT CONTAINS THE 2 REQUIRED WORDS
     if (
-      promptInput.includes(contests[0].random2Words[0]) &&
-      promptInput.includes(contests[0].random2Words[1])
+      promptInput
+        .toLowerCase()
+        .includes(contests[0].random2Words[0].toLowerCase()) &&
+      promptInput
+        .toLowerCase()
+        .includes(contests[0].random2Words[1].toLowerCase())
     ) {
       // GETS IMAGE´S OPENAI URL, THEN UPLOAD IMAGE TO CLOUDINARY
       let openAIURL = (await openAIGeneration(promptInput)) as string;
