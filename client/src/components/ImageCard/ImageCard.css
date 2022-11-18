@@ -1,0 +1,22 @@
+.image-container {
+  min-width: 500px;
+  min-height: 550px;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  background: none;
+}
+
+.image-container .image {
+  min-width: 500px;
+  min-height: 500px;
+  border-radius: inherit;
+}
+
+.image-container .image-tag {
+  text-shadow: none;
+  color: white;
+  width: 100%;
+  text-align: right;
+}
