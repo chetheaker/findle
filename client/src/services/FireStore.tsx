@@ -1,8 +1,11 @@
-
 import { firestore } from '../services/fireBaseInit';
 import firebase from 'firebase/compat/app';
 
-export const fetchImages = async (setImages:React.Dispatch<React.SetStateAction<firebase.firestore.DocumentData[]>> ) => {
+export const fetchImages = async (
+  setImages: React.Dispatch<
+    React.SetStateAction<firebase.firestore.DocumentData[]>
+  >
+) => {
   setImages([]);
   await firestore
     .collection('images')
@@ -17,17 +20,22 @@ export const fetchImages = async (setImages:React.Dispatch<React.SetStateAction<
     });
 };
 
-export const fetchContest = async (setContest:React.Dispatch<React.SetStateAction<firebase.firestore.DocumentData[]>> ) => {
+export const fetchContest = async (
+  setContest: React.Dispatch<
+    React.SetStateAction<firebase.firestore.DocumentData>
+  >
+) => {
   setContest([]);
   await firestore
     .collection('contests')
-    .orderBy('createdAt', 'desc')
+    .orderBy('expirationDate', 'desc')
+    .limit(1)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((element) => {
         let data = element.data();
         data.contestId = element.id;
-        setContest((arr) => [...arr, data]);
+        setContest(data);
       });
     });
 };
