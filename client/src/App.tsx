@@ -5,7 +5,7 @@ import { firestore } from './services/fireBaseInit';
 import { auth } from './services/fireBaseInit';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useEffect, useState } from 'react';
-import { fetchImages } from './services/FireStore';
+import { fetchImages, fetchContest } from './services/FireStore';
 
 // import components
 import Navbar from './components/Navbar/Navbar';
@@ -18,7 +18,7 @@ import SignIn from './components/SignIn/SignIn';
 function App() {
   const [images, setImages] = useState<firebase.firestore.DocumentData[]>([]);
   const [user] = useAuthState(auth as any);
-  const [contests, setContests] = useState<firebase.firestore.DocumentData[]>(
+  const [contests, setContest] = useState<firebase.firestore.DocumentData[]>(
     []
   );
 
@@ -27,42 +27,21 @@ function App() {
     fetchImages(setImages);
   }, []);
 
-
-  //FETCH CONTESTS
+  //FETCH CONTEST
   useEffect(() => {
-    fetchContest().catch(console.error);
+    fetchContest(setContest);
   }, []);
-
-  const fetchContest = async () => {
-    setContests([]);
-    await firestore
-      .collection('contests')
-      .orderBy('createdAt', 'desc')
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((element) => {
-          let data = element.data();
-          data.contestId = element.id;
-          setContests((arr) => [...arr, data]);
-        });
-      });
-  };
 
   return (
     <div className="App">
-      {/* <div>
-        <button onClick={notify}>Notify!</button>
-        <ToastContainer />
-       </div> */}
-
-      <Navbar></Navbar>
-
+      <Navbar/>
       <SignOut auth={auth}/>
       <h1 className="h1WC">
-        Trinity generates 2 random words. <br></br>
-        You create an AI-based image with a prompt. <br></br>
-        (must include the words) <br></br>
-        The coolest image wins! <br></br>
+        Trinity generates an image using AI based on  <br></br>
+        a specific prompt that includes 5 main keywords, then blurs it. <br></br>
+        You try to guess the prompt used, and difficulty is reduced on each try. <br></br>
+        Finally, you'll get the resulting image of the prompts you tried. <br></br>
+        Good luck! <br></br>
       </h1>
       <section className="section1">
         {user ? (
@@ -71,7 +50,7 @@ function App() {
               setImages={setImages}
               contests={contests}
               user={user}
-            ></CreateImage>
+            />
             {contests.map((contest) => (
               <ImageFeed key={contest.contestId} contest={contest}>
                 {images.map((image) => {
@@ -81,7 +60,7 @@ function App() {
                         user={user}
                         image={image}
                         key={image.data.asset_id}
-                      ></ImageCard>
+                      />
                     );
                   }
                   return <></>;

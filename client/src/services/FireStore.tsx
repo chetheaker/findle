@@ -16,3 +16,18 @@ export const fetchImages = async (setImages:React.Dispatch<React.SetStateAction<
       });
     });
 };
+
+export const fetchContest = async (setContest:React.Dispatch<React.SetStateAction<firebase.firestore.DocumentData[]>> ) => {
+  setContest([]);
+  await firestore
+    .collection('contests')
+    .orderBy('createdAt', 'desc')
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((element) => {
+        let data = element.data();
+        data.contestId = element.id;
+        setContest((arr) => [...arr, data]);
+      });
+    });
+};
