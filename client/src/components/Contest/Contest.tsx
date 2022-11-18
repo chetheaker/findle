@@ -1,3 +1,4 @@
+import './Contest.css';
 import { useState, useEffect } from 'react';
 import { fetchImages, fetchContest } from '../../services/FireStore';
 import firebase from 'firebase/compat/app';
@@ -27,10 +28,10 @@ function Contest() {
   if (isFetching) return <Spinner />;
 
   return (
-    <>
+    <div className="contest">
       <ImageCard imageUrl={images[0].url} />
       <PromptInput />
-    </>
+    </div>
   );
 }
 

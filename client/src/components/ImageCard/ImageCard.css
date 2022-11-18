@@ -1,6 +1,6 @@
 .image-container {
-  min-width: 500px;
-  min-height: 550px;
+  width: 500px;
+  height: 525px;
   margin: 1rem;
   border-radius: 0.5rem;
   display: flex;
@@ -16,7 +16,8 @@
 
 .image-container .image-tag {
   text-shadow: none;
-  color: white;
+  color: #6e7d93;
   width: 100%;
   text-align: right;
+  height: 25px;
 }

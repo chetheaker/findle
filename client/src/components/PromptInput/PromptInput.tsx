@@ -1,4 +1,6 @@
-import {useState} from 'react';
+import { useState } from 'react';
+import './PromptInput.css';
+import { Button } from '@chakra-ui/react';
 
 import Spinner from '../Spinner/Spinner';
 
