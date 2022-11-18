@@ -1,13 +1,12 @@
 import './App.css';
 import React from 'react';
-import { auth } from './services/fireBaseInit';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './services/fireBaseInit';
 import { ChakraProvider } from '@chakra-ui/react';
 
 // import components
 import Contest from './components/Contest/Contest';
 import Navbar from './components/Navbar/Navbar';
-import SignOut from './components/SignOut/SignOut';
 import SignIn from './components/SignIn/SignIn';
 
 function App() {
@@ -16,9 +15,8 @@ function App() {
   return (
     <ChakraProvider>
       <div className="App">
-        <Navbar />
-        <SignOut auth={auth} />
-        {user ? <Contest /> : <SignIn auth={auth} />}
+        <Navbar user={user} />
+        {user ? <Contest /> : <SignIn />}
       </div>
     </ChakraProvider>
   );

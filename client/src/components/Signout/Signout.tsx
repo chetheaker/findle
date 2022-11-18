@@ -1,17 +1,11 @@
-import './style.css'
+import './style.css';
+import { auth } from '../../services/fireBaseInit';
+import { Button } from '@chakra-ui/react';
 
-type Props = {
-    auth:any
-}
-
-const SignOut:React.FC<Props> = ({auth}) => {
-    return (
-      auth.currentUser && (
-        <button className="signOutButton" onClick={() => auth.signOut()}>
-          SignOut
-        </button>
-        )
-    );
-}
+const SignOut: React.FC = () => {
+  return (
+    auth.currentUser && <Button onClick={() => auth.signOut()}>Sign Out</Button>
+  );
+};
 
 export default SignOut;
