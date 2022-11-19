@@ -1,0 +1,45 @@
+.images-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem;
+}
+
+.images-container .lock {
+  margin: auto;
+  cursor: default;
+}
+
+.images-container .thumbnails {
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.images-container .thumbnail {
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: #6e7d93;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-cont {
+  width: 500px;
+  position: relative;
+}
+
+.image-cont .image-tag {
+  text-shadow: none;
+  color: #6e7d93;
+  bottom: -30px;
+  right: 0;
+  text-align: right;
+  height: 25px;
+  position: absolute;
+}

@@ -12,12 +12,18 @@ type Prompt = {
 type PromptsContainerProps = {
   prompt: string;
   promptArray: Prompt[];
+  guessCount: number;
+  setGuessCount: React.Dispatch<React.SetStateAction<number>>;
 };
 
-function PromptsContainer({ prompt, promptArray }: PromptsContainerProps) {
+function PromptsContainer({
+  prompt,
+  promptArray,
+  guessCount,
+  setGuessCount
+}: PromptsContainerProps) {
   const [inputs, setInputs] = useState<any>({});
   const [isChecking, setIsChecking] = useState(false);
-  const [guessCount, setGuessCount] = useState(0);
 
   const formatPrompt = () => {
     let formattedPrompt = prompt;

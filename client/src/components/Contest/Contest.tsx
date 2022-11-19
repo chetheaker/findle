@@ -3,14 +3,16 @@ import { useState, useEffect } from 'react';
 import { fetchContest } from '../../services/FireStore';
 import firebase from 'firebase/compat/app';
 
-import ImageCard from '../ImageCard/ImageCard';
 import Spinner from '../Spinner/Spinner';
 import PromptsContainer from '../PromptsContainer/PromptsContainer';
+import ImagesContainer from '../ImagesContainer/ImagesContainer';
 
 function Contest() {
   const [isFetching, setIsFetching] = useState(true);
   const [contest, setContest] =
     useState<firebase.firestore.DocumentData | null>(null);
+
+  const [guessCount, setGuessCount] = useState(0);
 
   // FETCH IMAGES AND CONTEST
   useEffect(() => {
@@ -26,10 +28,12 @@ function Contest() {
 
   return (
     <div className="contest">
-      <ImageCard imageUrl={contest.images[0]} />
+      <ImagesContainer images={contest.images} guessCount={guessCount} />
       <PromptsContainer
         prompt={contest.solutionPrompt}
         promptArray={contest.keywords}
+        guessCount={guessCount}
+        setGuessCount={setGuessCount}
       />
     </div>
   );
