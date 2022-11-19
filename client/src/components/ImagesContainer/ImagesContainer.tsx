@@ -30,7 +30,9 @@ function ImagesContainer({ images, guessCount }: ImagesContainerProps) {
             >
               <ImageCard imageUrl={image} />
               {index < guessCount + 1 || (
-                <BiLockAlt color="white" size="2em" className="lock" />
+                <div className="overlay">
+                  <BiLockAlt color="white" size="2em" className="lock" />
+                </div>
               )}
             </button>
           );
