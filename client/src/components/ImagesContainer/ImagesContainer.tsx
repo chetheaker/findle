@@ -1,5 +1,5 @@
 import './ImagesContainer.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ImageCard from '../ImageCard/ImageCard';
 import { BiLockAlt } from 'react-icons/bi';
@@ -15,6 +15,10 @@ function ImagesContainer({ images, guessCount }: ImagesContainerProps) {
   const handleClick = (url: string) => {
     setActive(url);
   };
+
+  useEffect(() => {
+    setActive(images[guessCount]);
+  }, [images, guessCount]);
 
   return (
     <div className="images-container">
