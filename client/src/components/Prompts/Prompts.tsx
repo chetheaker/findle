@@ -1,5 +1,7 @@
+import { useDisclosure } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import './Prompts.css';
+import ShareModal from '../ShareModal/ShareModal';
 
 type PromptsProps = {
   prompt: string;
@@ -7,6 +9,7 @@ type PromptsProps = {
   isChecking: boolean;
   setIsChecking: React.Dispatch<React.SetStateAction<boolean>>;
   inputs: any;
+  guessCount: number;
 };
 
 type Prompt = {
@@ -19,9 +22,11 @@ function Prompts({
   promptArray,
   isChecking,
   setIsChecking,
-  inputs
+  inputs,
+  guessCount
 }: PromptsProps) {
   const promptAsArray = prompt.split(' ');
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     if (isChecking) {
@@ -49,8 +54,31 @@ function Prompts({
             )[0] as any;
             input.disabled = true;
             input.value = promptArray[i].word;
+            input.classList.remove('active');
           }
         }
+      }
+
+      // focus on first available input
+      const firstInput = document.querySelector('.active') as HTMLInputElement;
+      if (firstInput) firstInput.focus();
+
+      if (guessCount === 5) {
+        const unknownCopy = [...unknownPrompts];
+        for (let i = 0; i < unknownCopy.length; i++) {
+          unknownCopy[i].classList.add('wrong');
+          unknownCopy[i].classList.remove('unknown');
+          for (let j = 0; j < promptArray.length; j++) {
+            if (unknownCopy[i].textContent === promptArray[j].type) {
+              unknownCopy[i].textContent = promptArray[j].word;
+            }
+          }
+        }
+        setTimeout(() => {
+          onOpen();
+        }, 1000);
+        const form = document.getElementById('prompt-form');
+        if (form) form.style.display = 'none';
       }
       setIsChecking(false);
     }
@@ -58,21 +86,25 @@ function Prompts({
   }, [isChecking]);
 
   return (
-    <div className="prompts">
-      <h1>
-        {promptAsArray.map((word, index) => {
-          if (!isNaN(+word)) {
-            return (
-              <span key={index} className="unknown">
-                {promptArray[+word].type}
-              </span>
-            );
-          } else {
-            return <span key={index}>{word} </span>;
-          }
-        })}
-      </h1>
-    </div>
+    <>
+      <div className="prompts">
+        <h1>
+          {promptAsArray.map((word, index) => {
+            if (!isNaN(+word)) {
+              return (
+                <span key={index} className="unknown">
+                  {promptArray[+word].type}
+                </span>
+              );
+            } else {
+              return <span key={index}>{word} </span>;
+            }
+          })}
+        </h1>
+        <div className="guess-count">{guessCount} / 5 Guesses</div>
+      </div>
+      <ShareModal onClose={onClose} isOpen={isOpen} />
+    </>
   );
 }
 

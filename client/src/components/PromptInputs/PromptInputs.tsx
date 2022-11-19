@@ -6,6 +6,7 @@ type PromptInputProps = {
   promptArray: Prompt[];
   setInputs: React.Dispatch<any>;
   setIsChecking: React.Dispatch<React.SetStateAction<boolean>>;
+  setGuessCount: React.Dispatch<React.SetStateAction<number>>;
 };
 
 type Prompt = {
@@ -17,14 +18,15 @@ function PromptInputs({
   prompt,
   promptArray,
   setInputs,
-  setIsChecking
+  setIsChecking,
+  setGuessCount
 }: PromptInputProps) {
   const promptAsArray = prompt.split(' ');
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setIsChecking(true);
-
+    setGuessCount((prev) => prev + 1);
     promptAsArray
       .filter((word) => !isNaN(+word))
       .forEach((word) => {
@@ -42,7 +44,7 @@ function PromptInputs({
   };
 
   return (
-    <form className="promptForm" onSubmit={handleSubmit}>
+    <form className="promptForm" id="prompt-form" onSubmit={handleSubmit}>
       {promptAsArray
         .filter((word) => !isNaN(+word))
         .map((word, index) => {
@@ -53,11 +55,12 @@ function PromptInputs({
               required
               name={promptArray[+word].type}
               disabled={false}
-              className="prompt-input"
+              className="prompt-input active"
               onChange={(e) =>
                 handleInputChange(promptArray[+word].type, e.target.value)
               }
               key={index}
+              autoComplete="off"
             />
           );
         })}
