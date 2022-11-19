@@ -20,14 +20,6 @@
   border-radius: 0.5rem;
 }
 
-.prompts .wrong {
-  color: white;
-  background-color: #c53030;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin: 0.2rem;
-}
-
 .prompts .guess-count {
   font-family: Avenir;
   font-weight: bold;

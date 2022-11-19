@@ -64,10 +64,13 @@ function Prompts({
       if (firstInput) firstInput.focus();
 
       if (guessCount === 5) {
-        const unknownCopy = [...unknownPrompts];
+        const unknownCopy:any[] = [...unknownPrompts];
         for (let i = 0; i < unknownCopy.length; i++) {
-          unknownCopy[i].classList.add('wrong');
+          console.log(unknownCopy)
+          unknownCopy[i].nextElementSibling!.style.background = ('#c53030')
           unknownCopy[i].classList.remove('unknown');
+          unknownCopy[i].parentElement.classList.add('flip');
+          unknownCopy[i].nextElementSibling.textContent = promptArray[i].word;
           for (let j = 0; j < promptArray.length; j++) {
             if (unknownCopy[i].textContent === promptArray[j].type) {
               unknownCopy[i].textContent = promptArray[j].word;
