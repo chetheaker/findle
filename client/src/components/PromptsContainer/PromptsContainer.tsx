@@ -17,6 +17,7 @@ type PromptsContainerProps = {
 function PromptsContainer({ prompt, promptArray }: PromptsContainerProps) {
   const [inputs, setInputs] = useState<any>({});
   const [isChecking, setIsChecking] = useState(false);
+  const [guessCount, setGuessCount] = useState(0);
 
   const formatPrompt = () => {
     let formattedPrompt = prompt;
@@ -37,12 +38,14 @@ function PromptsContainer({ prompt, promptArray }: PromptsContainerProps) {
         setIsChecking={setIsChecking}
         isChecking={isChecking}
         inputs={inputs}
+        guessCount={guessCount}
       />
       <PromptInput
         prompt={formatPrompt()}
         promptArray={promptArray}
         setInputs={setInputs}
         setIsChecking={setIsChecking}
+        setGuessCount={setGuessCount}
       />
     </>
   );
