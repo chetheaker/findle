@@ -46,8 +46,8 @@ function Prompts({
           }
           if (found) {
             found.classList.remove('unknown');
-            found.classList.add('known');
-            found.textContent = promptArray[i].word;
+            found!.parentElement.classList.add('flip');
+            found!.nextElementSibling.textContent = promptArray[i].word;
 
             const input = document.getElementsByName(
               promptArray[i].type
@@ -88,19 +88,24 @@ function Prompts({
   return (
     <>
       <div className="prompts">
-        <h1>
           {promptAsArray.map((word, index) => {
             if (!isNaN(+word)) {
               return (
-                <span key={index} className="unknown">
+                <div className="flip-card">
+                  <div className="flip-card-inner">
+                <div key={index} className="unknown flip-card-front">
                   {promptArray[+word].type}
-                </span>
+                </div>
+                <div className='flip-card-back'>
+                  
+                </div>
+                </div>
+                </div>
               );
             } else {
-              return <span key={index}>{word} </span>;
+              return <div key={index}>{word} </div>;
             }
           })}
-        </h1>
         <div className="guess-count">{guessCount} / 5 Guesses</div>
       </div>
       <ShareModal onClose={onClose} isOpen={isOpen} />
