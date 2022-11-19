@@ -40,9 +40,9 @@ const ShareModal = ({ onClose, isOpen }: ShareProps) => {
     setIsGenerating(false);
   };
 
-  useEffect(() => {
-    generateUserImage();
-  }, []);
+  // useEffect(() => {
+  //   generateUserImage();
+  // }, []);
 
   return (
     <Modal onClose={onClose} size="xl" isOpen={isOpen}>
