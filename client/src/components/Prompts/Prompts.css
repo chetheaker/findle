@@ -92,6 +92,7 @@
   .prompts {
     flex-wrap: wrap;
     width: 90vw;
+    justify-content: center;
   }
   .prompt-input {
     width: 23%!important;
