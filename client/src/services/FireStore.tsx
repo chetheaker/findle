@@ -36,6 +36,11 @@ export const fetchContest = async (
         let data = element.data();
         data.contestId = element.id;
         setContest(data);
+        const contestId = JSON.parse(localStorage.getItem('id') as string);
+        if (contestId !== data.contestId) {
+          localStorage.clear();
+          localStorage.setItem('id', JSON.stringify(data.contestId));
+        }
       });
     });
 };
