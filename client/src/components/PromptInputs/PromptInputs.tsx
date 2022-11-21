@@ -1,4 +1,5 @@
 import { Button } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import './PromptInputs.css';
 
 type PromptInputProps = {
@@ -26,7 +27,10 @@ function PromptInputs({
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setIsChecking(true);
-    setGuessCount((prev) => prev + 1);
+    setGuessCount((prev) => {
+      localStorage.setItem('guessCount', JSON.stringify(prev + 1));
+      return prev + 1;
+    });
     promptAsArray
       .filter((word) => !isNaN(+word))
       .forEach((word) => {
@@ -35,6 +39,11 @@ function PromptInputs({
         }
       });
   };
+
+  useEffect(() => {
+    const localInputs = JSON.parse(localStorage.getItem('answers') as string);
+    setInputs(localInputs);
+  }, [setInputs]);
 
   const handleInputChange = (type: string, value: string) => {
     setInputs((prev: any) => ({

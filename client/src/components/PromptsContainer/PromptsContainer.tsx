@@ -40,6 +40,10 @@ function PromptsContainer({
     return formattedPrompt;
   };
 
+  if (!localStorage.getItem('answers')) {
+    localStorage.setItem('answers', JSON.stringify({}));
+  }
+
   return (
     <>
       <Prompts
