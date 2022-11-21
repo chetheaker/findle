@@ -16,7 +16,7 @@
 }
 
 .searchBar {
-  color: white;
+  color: var(--secondary-color);
   align-self: center;
 }
 .container {

@@ -8,7 +8,7 @@
 }
 
 .promptForm span {
-  color: white;
+  color: var(--secondary-color);
 }
 
 .promptForm .prompt-input {

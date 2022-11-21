@@ -1,7 +1,7 @@
 .navbar {
   height: 9vh;
   width: 100vw;
-  background-color: #12171a;
+  background-color: var(--bg-color);
   padding: 0 7.5vh;
   border-bottom: solid 1px #6e7d93;
   display: flex;
@@ -9,7 +9,7 @@
   justify-content: space-between;
 }
 .navbar h1 {
-  color: white;
+  color: var(--secondary-color);
   font-family: Avenir;
   font-weight: bold;
   font-size: 2rem;

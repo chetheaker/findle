@@ -1,5 +1,5 @@
 .prompts {
-  color: white;
+  color: var(--secondary-color);
   margin: 1rem;
   display: flex;
   gap: 0.5rem;
@@ -7,14 +7,14 @@
 }
 
 .prompts .unknown {
-  color: black;
-  background-color: white;
+  color: var(--bg-color);
+  background-color: var(--secondary-color);
   padding: 1rem;
   border-radius: 0.5rem;
 }
 
 .prompts .known {
-  color: white;
+  color: var(--secondary-color);
   background-color: #38a169;
   padding: 1rem;
   border-radius: 0.5rem;
@@ -63,8 +63,8 @@
 /* Style the front side (fallback if image is missing) */
 .flip-card-front {
   margin: 0;
-  background-color: #bbb;
-  color: black;
+  background-color: var(--secondary-color);
+  color: var(--bg-color);
 }
 
 /* Style the back side */
