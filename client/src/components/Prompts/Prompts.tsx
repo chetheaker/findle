@@ -69,13 +69,8 @@ function Prompts({
       setComplete(true);
       const unknownCopy: any[] = [...unknownPrompts];
       for (let i = 0; i < unknownCopy.length; i++) {
-<<<<<<< HEAD
         console.log(unknownCopy[i].textContent);
-        unknownCopy[i].nextElementSibling!.style.background = '#c53030';
-=======
-        console.log(unknownCopy);
         unknownCopy[i].nextElementSibling!.style.background = '--wrong-color';
->>>>>>> feat-colormode
         unknownCopy[i].classList.remove('unknown');
         unknownCopy[i].parentElement.classList.add('flip');
         for (let j = 0; j < promptArray.length; j++) {
