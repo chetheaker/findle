@@ -12,7 +12,9 @@ function Contest() {
   const [contest, setContest] =
     useState<firebase.firestore.DocumentData | null>(null);
 
-  const [guessCount, setGuessCount] = useState(0);
+  const [guessCount, setGuessCount] = useState(
+    Number(localStorage.getItem('guessCount')) || 0
+  );
   const [complete, setComplete] = useState(false);
 
   // FETCH IMAGES AND CONTEST

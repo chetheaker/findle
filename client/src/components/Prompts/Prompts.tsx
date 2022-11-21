@@ -33,10 +33,66 @@ function Prompts({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
+    const answers = JSON.parse(localStorage.getItem('answers') as string);
+    const unknownPrompts = document.getElementsByClassName('unknown');
+    for (let i = 0; i < unknownPrompts.length; i++) {
+      for (let type in answers) {
+        if (type === unknownPrompts[i].textContent) {
+          const found = unknownPrompts[i];
+          found.classList.remove('unknown');
+          found!.parentElement!.classList.add('flip');
+          found!.nextElementSibling!.textContent = answers[type];
+
+          const input = document.getElementsByName(type)[0] as any;
+          input.disabled = true;
+          input.value = answers[type];
+          input.classList.remove('active');
+        }
+      }
+    }
+
+    if (unknownPrompts.length === 0) {
+      console.log('this is true');
+      setComplete(true);
+      setTimeout(() => {
+        onOpen();
+      }, 1000);
+      const form = document.getElementById('prompt-form');
+      if (form) form.style.display = 'none';
+    }
+
+    // focus on first available input
+    const firstInput = document.querySelector('.active') as HTMLInputElement;
+    if (firstInput) firstInput.focus();
+
+    if (guessCount >= 5) {
+      setComplete(true);
+      const unknownCopy: any[] = [...unknownPrompts];
+      for (let i = 0; i < unknownCopy.length; i++) {
+        console.log(unknownCopy);
+        unknownCopy[i].nextElementSibling!.style.background = '#c53030';
+        unknownCopy[i].classList.remove('unknown');
+        unknownCopy[i].parentElement.classList.add('flip');
+        unknownCopy[i].nextElementSibling.textContent = promptArray[i].word;
+        for (let j = 0; j < promptArray.length; j++) {
+          if (unknownCopy[i].textContent === promptArray[j].type) {
+            unknownCopy[i].textContent = promptArray[j].word;
+          }
+        }
+      }
+      setTimeout(() => {
+        onOpen();
+      }, 1000);
+      const form = document.getElementById('prompt-form');
+      if (form) form.style.display = 'none';
+    }
+  }, []);
+
+  useEffect(() => {
     if (isChecking) {
-      console.log(inputs);
       const unknownPrompts = document.getElementsByClassName('unknown');
       for (let i = 0; i < promptArray.length; i++) {
+        console.log('input', inputs);
         const inputValue = inputs[promptArray[i].type].toLowerCase();
         const promptValue = promptArray[i].word.toLowerCase();
         if (inputValue === promptValue) {
@@ -59,6 +115,14 @@ function Prompts({
             input.disabled = true;
             input.value = promptArray[i].word;
             input.classList.remove('active');
+
+            // add to local storage
+            const prev = JSON.parse(localStorage.getItem('answers') as string);
+            const newResults = {
+              ...prev,
+              [type]: promptArray[i].word
+            };
+            localStorage.setItem('answers', JSON.stringify(newResults));
           }
         }
       }
@@ -76,7 +140,7 @@ function Prompts({
       const firstInput = document.querySelector('.active') as HTMLInputElement;
       if (firstInput) firstInput.focus();
 
-      if (guessCount === 5) {
+      if (guessCount >= 5) {
         setComplete(true);
         const unknownCopy: any[] = [...unknownPrompts];
         for (let i = 0; i < unknownCopy.length; i++) {
