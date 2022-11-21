@@ -31,7 +31,7 @@ import {
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>How to play</ModalHeader>
+            <ModalHeader>Settings</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
                 <div className="theme">
@@ -42,7 +42,7 @@ import {
                     </div>
                 </div>
                 <div className="theme">
-                    Color Theme
+                    High Contrast Mode
                     <div className="toggle">
                         <input type="checkbox" id="unchecked" className="cbx hidden" onChange={handleChange} defaultChecked={!colormode} />
                         <label htmlFor="unchecked" className="lbl"></label>
