@@ -33,11 +33,11 @@ const HowToModal: React.FC<Props> = ({ darkMode }) => {
               to generate the image.
               <br />
               <br />
-              With each guess the image becomes less pixelated and you get hints
-              to guess the prompt.
+              With each guess you get a new image to help you
+              guess the prompt.
               <br />
               <br />
-              At the end you will be able to see your own AI generated image
+              At the end you will be able to see your own AI generated image if you sign in.
             </div>
           </ModalBody>
         </ModalContent>
