@@ -10,6 +10,7 @@ import {
   } from '@chakra-ui/react';
   import React from 'react';
   import { AiFillQuestionCircle } from 'react-icons/ai';
+  import './SettingsModal.css'
   
   type Props = {
     setDarkmode: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,13 +26,16 @@ import {
           <AiFillQuestionCircle color={darkMode ? "#E2E8F0" : "black"} size="2em" />
         </button>
   
-        <Modal onClose={onClose} isOpen={isOpen} isCentered>
+        <Modal background-color={darkMode ? "#E2E8F0" : "black"} onClose={onClose} isOpen={isOpen} isCentered>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>How to play</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-                <div onClick={handleClick}>DARKMODE</div>
+                <div className="toggle">
+                    <input type="checkbox" id="unchecked" className="cbx hidden" onChange={handleClick} defaultChecked={darkMode} />
+                    <label htmlFor="unchecked" className="lbl"></label>
+                </div>
             </ModalBody>
           </ModalContent>
         </Modal>

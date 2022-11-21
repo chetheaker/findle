@@ -10,7 +10,7 @@ import Navbar from './components/Navbar/Navbar';
 
 function App() {
   const [user] = useAuthState(auth as any);
-  const [darkmode, setDarkmode] = useState(false);
+  const [darkmode, setDarkmode] = useState(true);
   const root = document.getElementById('root') as HTMLElement
   useEffect(()=> {
     if (darkmode) {
