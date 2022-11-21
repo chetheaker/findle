@@ -20,7 +20,7 @@ const firestore = admin.firestore();
 //   });
 
 
-  exports.scheduledFunction = functions.pubsub.schedule('every 2 minutes')
+  exports.scheduledFunction = functions.pubsub.schedule('every 3 minutes')
   .onRun((context) => {
 //CLOUDINARY MODULE
   const upload2Cloudinary = async (aiUrl: string) => {
@@ -60,10 +60,9 @@ const openAIGeneration = async (prompt: string) => {
   async function contestGeneration () {
     const currentContestRef = await firestore.collection('currentContest');
     const pendingContestRef = await firestore.collection('pendingContests');
+    const finishedContestsRef = await firestore.collection('finishedContests');
     const result: DocumentData[] = [];
   
-  //RETRIEVE PENDING CONTESTS 
-  //(CHANGE TO SINGLE GET!!! NOT WORKING)
       const QuerySnapshot = await pendingContestRef.limit(1).get()
       QuerySnapshot.forEach((element: { data: () => any; id: any; }) => {
         let data = element.data();
@@ -88,18 +87,36 @@ const openAIGeneration = async (prompt: string) => {
     }
     console.log("FINAL IMAGES ARRAY: ", cdnImages);
   
-    await currentContestRef.add({
+    const currentResult: DocumentData[] = [];
+    const QuerySnapshot2 = await currentContestRef.limit(1).get()
+    QuerySnapshot2.forEach((element: { data: () => any; id: any; }) => {
+      let data = element.data();
+      data.id = element.id;
+      currentResult.push(data)
+      return data;
+    })
+    
+    console.log("currentResult: ", currentResult);
+
+    const newContest = {
       expirationDate: Date.now() + 8.64e7,
       createdAt: Date.now(),
       images: cdnImages,
       solutionPrompt: prompt,
       keywords: result[0].keywords
-    });
+    }
+
+    await currentContestRef.add(newContest);
     const idToDelete = result[0].id;
+
+    await finishedContestsRef.add(...currentResult);
+    await currentContestRef.doc(currentResult[0].id).delete();
+
     await pendingContestRef.doc(idToDelete).delete();
-      return null;
+    return null;
   }
   contestGeneration();
+  return 1;
   });
 
 
