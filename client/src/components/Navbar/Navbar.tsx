@@ -11,10 +11,12 @@ type NavbarProps = {
 function Navbar({ user }: NavbarProps) {
   return (
     <div className="navbar">
-      <HowToModal />
       <h1>TRINITY</h1>
-      <ProfileModal />
-      {user ? <SignOut /> : <SignIn />}
+      <div className='right'>
+        <HowToModal />
+        {user ? <ProfileModal /> : <SignIn />}
+        <div>⚙️</div>
+      </div>
     </div>
   );
 }
