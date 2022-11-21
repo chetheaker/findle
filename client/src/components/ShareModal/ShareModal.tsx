@@ -80,7 +80,7 @@ const ShareModal = ({
   return (
     <Modal onClose={onClose} size="xl" isOpen={isOpen}>
       <ModalOverlay />
-      <ModalContent bg="#121213" className="modal-content-results">
+      <ModalContent className="modal-content-results">
         <ModalHeader>
           <div className="results-box-container">
             {promptArray.map((result, index) => {
