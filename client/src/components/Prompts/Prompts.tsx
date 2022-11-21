@@ -35,10 +35,11 @@ function Prompts({
   useEffect(() => {
     const answers = JSON.parse(localStorage.getItem('answers') as string);
     const unknownPrompts = document.getElementsByClassName('unknown');
-    for (let i = 0; i < unknownPrompts.length; i++) {
+    const unknownCopy: any[] = [...unknownPrompts];
+    for (let i = 0; i < unknownCopy.length; i++) {
       for (let type in answers) {
-        if (type === unknownPrompts[i].textContent) {
-          const found = unknownPrompts[i];
+        if (type === unknownCopy[i].textContent) {
+          const found = unknownCopy[i];
           found.classList.remove('unknown');
           found!.parentElement!.classList.add('flip');
           found!.nextElementSibling!.textContent = answers[type];
@@ -52,7 +53,6 @@ function Prompts({
     }
 
     if (unknownPrompts.length === 0) {
-      console.log('this is true');
       setComplete(true);
       setTimeout(() => {
         onOpen();
@@ -69,13 +69,13 @@ function Prompts({
       setComplete(true);
       const unknownCopy: any[] = [...unknownPrompts];
       for (let i = 0; i < unknownCopy.length; i++) {
-        console.log(unknownCopy);
+        console.log(unknownCopy[i].textContent);
         unknownCopy[i].nextElementSibling!.style.background = '#c53030';
         unknownCopy[i].classList.remove('unknown');
         unknownCopy[i].parentElement.classList.add('flip');
-        unknownCopy[i].nextElementSibling.textContent = promptArray[i].word;
         for (let j = 0; j < promptArray.length; j++) {
           if (unknownCopy[i].textContent === promptArray[j].type) {
+            unknownCopy[i].nextElementSibling.textContent = promptArray[j].word;
             unknownCopy[i].textContent = promptArray[j].word;
           }
         }
@@ -86,6 +86,7 @@ function Prompts({
       const form = document.getElementById('prompt-form');
       if (form) form.style.display = 'none';
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -148,9 +149,10 @@ function Prompts({
           unknownCopy[i].nextElementSibling!.style.background = '#c53030';
           unknownCopy[i].classList.remove('unknown');
           unknownCopy[i].parentElement.classList.add('flip');
-          unknownCopy[i].nextElementSibling.textContent = promptArray[i].word;
           for (let j = 0; j < promptArray.length; j++) {
             if (unknownCopy[i].textContent === promptArray[j].type) {
+              unknownCopy[i].nextElementSibling.textContent =
+                promptArray[j].word;
               unknownCopy[i].textContent = promptArray[j].word;
             }
           }
