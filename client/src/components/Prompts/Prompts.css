@@ -76,3 +76,25 @@
 .guess {
   background: var(--correct-color) !important;
 }
+@media(max-width: 675px) {
+  .flip-card {
+    background-color: transparent;
+    width: 70px;
+    height: 30px;
+    border-radius: 0.5rem;
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  }
+  #prompt-form {
+    justify-content: center;
+    width: 100vw;
+    flex-wrap: wrap;
+  }
+  .prompts {
+    flex-wrap: wrap;
+    width: 90vw;
+  }
+  .prompt-input {
+    width: 23%!important;
+    font-size: 0.8rem;
+  }
+}

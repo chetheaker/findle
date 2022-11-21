@@ -62,3 +62,39 @@
   height: 25px;
   position: absolute;
 }
+@media(max-width: 675px) {
+  .image-cont {
+    width: 75vw;
+    position: relative;
+  }
+  .images-container .thumbnails{ 
+    justify-content: center;
+    align-items: center;
+    height: 75%;
+  }
+  .images-container .thumbnail {
+    width: 75%;
+    aspect-ratio: 1;
+    background-color: #6e7d93;
+    border-radius: 0.5rem;
+    display: flex;
+  }
+  .images-container {
+    display: flex;
+    justify-content: start;
+    height: 75vw;
+    position: relative;
+    align-items: center;
+  }
+}
+@media(max-width: 500px) {
+  .image-cont {
+    width: 75vw;
+  }
+  .images-container .thumbnail {
+    width: 60%;
+  }
+  .images-container {
+    gap:0;
+  }
+}

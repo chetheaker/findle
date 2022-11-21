@@ -1,6 +1,6 @@
 .contest {
   display: grid;
-  width: 100%;
+  width: 100vw;
   place-items: center;
   gap: 1rem;
   background-color: var(--bg-color);
