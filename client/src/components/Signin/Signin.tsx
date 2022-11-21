@@ -8,7 +8,11 @@ const SignIn: React.FC = () => {
     await auth.signInWithPopup(provider);
   };
 
-  return <Button onClick={signInWithGoogle}>Sign In</Button>;
+  return (
+    <Button onClick={signInWithGoogle} color="black">
+      Sign In
+    </Button>
+  );
 };
 
 export default SignIn;

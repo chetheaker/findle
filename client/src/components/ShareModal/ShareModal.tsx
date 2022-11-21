@@ -14,6 +14,9 @@ import { AiOutlineShareAlt } from 'react-icons/ai';
 import { openAIGeneration } from '../../services/generateOpAI';
 import { upload2Cloudinary } from '../../services/upload2Cloudinary';
 import { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../services/fireBaseInit';
+import SignIn from '../SignIn/SignIn';
 
 type ShareProps = {
   isOpen: boolean;
@@ -44,6 +47,7 @@ const ShareModal = ({
   const [userImageUrl, setUserImageUrl] = useState('');
   const [isGenerating, setIsGenerating] = useState(true);
   const [userPrompt, setUserPrompt] = useState('');
+  const [user] = useAuthState(auth as any);
 
   const generateUserImage = async (promptToGenerate: string) => {
     const aiUrl = await openAIGeneration(promptToGenerate);
@@ -66,10 +70,12 @@ const ShareModal = ({
       }
     }
     setUserPrompt(userPromptArray.join(' '));
-    // generateUserImage(userPromptArray.join(' '));
+    if (user && isGenerating) {
+      generateUserImage(userPromptArray.join(' '));
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [complete]);
+  }, [complete, auth]);
 
   return (
     <Modal onClose={onClose} size="xl" isOpen={isOpen}>
@@ -93,16 +99,26 @@ const ShareModal = ({
               <h1>Your unique AI generated image</h1>
             </div>
             <div className="share-image">
-              {isGenerating ? (
+              {user ? (
+                isGenerating ? (
+                  <div className="image-loading">
+                    <h1>
+                      We're generating your unique AI generated image. <br />
+                      Sit tight...
+                    </h1>
+                    <Spinner />
+                  </div>
+                ) : (
+                  <ImageCard imageUrl={userImageUrl} />
+                )
+              ) : (
                 <div className="image-loading">
                   <h1>
-                    We're generating your unique AI generated image. <br />
-                    Sit tight...
+                    You must be signed in to get your unique AI generated
+                    image...
                   </h1>
-                  <Spinner />
+                  <SignIn />
                 </div>
-              ) : (
-                <ImageCard imageUrl={userImageUrl} />
               )}
               <div className="bottom">
                 <h2>Prompt: {userPrompt}</h2>
