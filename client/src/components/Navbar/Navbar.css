@@ -8,15 +8,14 @@
   align-items: center;
   justify-content: space-between;
 }
-
 .navbar h1 {
   color: white;
   font-family: Avenir;
   font-weight: bold;
   font-size: 2rem;
 }
-
 .navbar .right {
   display: flex;
+  align-items: center;
   gap: 1rem;
 }

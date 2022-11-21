@@ -10,6 +10,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import { CgProfile } from 'react-icons/cg';
+import SignOut from '../SignOut/SignOut';
 
 const ProfileModal: React.FC = () => {
   const name = 'Hello World';
@@ -33,6 +34,7 @@ const ProfileModal: React.FC = () => {
       <Modal onClose={onClose} size={size} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
+          <SignOut />
           <ModalHeader>Profile</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
