@@ -35,7 +35,7 @@ function ImagesContainer({
             <button
               className="thumbnail"
               onClick={() => {
-                index < guessCount + 1 && handleClick(image);
+                (index < guessCount + 1 || complete) && handleClick(image);
               }}
               key={index}
             >
