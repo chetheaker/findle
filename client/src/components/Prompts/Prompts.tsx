@@ -69,8 +69,8 @@ function Prompts({
       setComplete(true);
       const unknownCopy: any[] = [...unknownPrompts];
       for (let i = 0; i < unknownCopy.length; i++) {
-        console.log(unknownCopy[i].textContent);
-        unknownCopy[i].nextElementSibling!.style.backgroundColor = 'var(--wrong-color)';
+        unknownCopy[i].nextElementSibling!.style.backgroundColor =
+          'var(--wrong-color)';
         unknownCopy[i].classList.remove('unknown');
         unknownCopy[i].parentElement.classList.add('flip');
         for (let j = 0; j < promptArray.length; j++) {
@@ -93,7 +93,6 @@ function Prompts({
     if (isChecking) {
       const unknownPrompts = document.getElementsByClassName('unknown');
       for (let i = 0; i < promptArray.length; i++) {
-        console.log('input', inputs);
         const inputValue = inputs[promptArray[i].type].toLowerCase();
         const promptValue = promptArray[i].word.toLowerCase();
         if (inputValue === promptValue) {
@@ -143,10 +142,13 @@ function Prompts({
 
       if (guessCount >= 5) {
         setComplete(true);
+        localStorage.setItem('inputs', JSON.stringify(inputs));
         const unknownCopy: any[] = [...unknownPrompts];
         for (let i = 0; i < unknownCopy.length; i++) {
-          console.log(unknownCopy);
-          unknownCopy[i].nextElementSibling!.style.backgroundColor = 'var(--wrong-color)';
+          const type = unknownCopy[i].textContent;
+          console.log('unknown keyword type', type);
+          unknownCopy[i].nextElementSibling!.style.backgroundColor =
+            'var(--wrong-color)';
           unknownCopy[i].classList.remove('unknown');
           unknownCopy[i].parentElement.classList.add('flip');
           for (let j = 0; j < promptArray.length; j++) {
