@@ -12,9 +12,6 @@ import {
 import { CgProfile } from 'react-icons/cg';
 
 const ProfileModal: React.FC = () => {
-  //props
-  const image =
-    'https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Flag_of_Sweden.svg/1200px-Flag_of_Sweden.svg.png';
   const name = 'Hello World';
   const score = 5;
   const images = [
@@ -43,8 +40,8 @@ const ProfileModal: React.FC = () => {
             <div>{score}</div>
             <div>Your images</div>
             <div>
-              {images.map((image) => {
-                return <img src={image} />;
+              {images.map((image, index) => {
+                return <img src={image} key={index} alt="" />;
               })}
             </div>
           </ModalBody>

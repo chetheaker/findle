@@ -1,4 +1,4 @@
-import { useDisclosure } from '@chakra-ui/react';
+import { Button, useDisclosure } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import './Prompts.css';
 import ShareModal from '../ShareModal/ShareModal';
@@ -10,6 +10,8 @@ type PromptsProps = {
   setIsChecking: React.Dispatch<React.SetStateAction<boolean>>;
   inputs: any;
   guessCount: number;
+  complete: boolean;
+  setComplete: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type Prompt = {
@@ -23,7 +25,9 @@ function Prompts({
   isChecking,
   setIsChecking,
   inputs,
-  guessCount
+  guessCount,
+  complete,
+  setComplete
 }: PromptsProps) {
   const promptAsArray = prompt.split(' ');
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -59,15 +63,25 @@ function Prompts({
         }
       }
 
+      if (unknownPrompts.length === 0) {
+        setComplete(true);
+        setTimeout(() => {
+          onOpen();
+        }, 1000);
+        const form = document.getElementById('prompt-form');
+        if (form) form.style.display = 'none';
+      }
+
       // focus on first available input
       const firstInput = document.querySelector('.active') as HTMLInputElement;
       if (firstInput) firstInput.focus();
 
       if (guessCount === 5) {
-        const unknownCopy:any[] = [...unknownPrompts];
+        setComplete(true);
+        const unknownCopy: any[] = [...unknownPrompts];
         for (let i = 0; i < unknownCopy.length; i++) {
-          console.log(unknownCopy)
-          unknownCopy[i].nextElementSibling!.style.background = ('#c53030')
+          console.log(unknownCopy);
+          unknownCopy[i].nextElementSibling!.style.background = '#c53030';
           unknownCopy[i].classList.remove('unknown');
           unknownCopy[i].parentElement.classList.add('flip');
           unknownCopy[i].nextElementSibling.textContent = promptArray[i].word;
@@ -91,27 +105,33 @@ function Prompts({
   return (
     <>
       <div className="prompts">
-          {promptAsArray.map((word, index) => {
-            if (!isNaN(+word)) {
-              return (
-                <div className="flip-card">
-                  <div className="flip-card-inner">
-                <div key={index} className="unknown flip-card-front">
-                  {promptArray[+word].type}
+        {promptAsArray.map((word, index) => {
+          if (!isNaN(+word)) {
+            return (
+              <div className="flip-card" key={index}>
+                <div className="flip-card-inner">
+                  <div className="unknown flip-card-front">
+                    {promptArray[+word].type}
+                  </div>
+                  <div className="flip-card-back"></div>
                 </div>
-                <div className='flip-card-back'>
-                  
-                </div>
-                </div>
-                </div>
-              );
-            } else {
-              return <div key={index}>{word} </div>;
-            }
-          })}
+              </div>
+            );
+          } else {
+            return <div key={index}>{word} </div>;
+          }
+        })}
         <div className="guess-count">{guessCount} / 5 Guesses</div>
       </div>
-      <ShareModal onClose={onClose} isOpen={isOpen} />
+      {complete && <Button onClick={onOpen}>View Results</Button>}
+      <ShareModal
+        onClose={onClose}
+        isOpen={isOpen}
+        inputs={inputs}
+        prompt={prompt}
+        promptArray={promptArray}
+        complete={complete}
+      />
     </>
   );
 }

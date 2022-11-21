@@ -14,13 +14,17 @@ type PromptsContainerProps = {
   promptArray: Prompt[];
   guessCount: number;
   setGuessCount: React.Dispatch<React.SetStateAction<number>>;
+  complete: boolean;
+  setComplete: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function PromptsContainer({
   prompt,
   promptArray,
   guessCount,
-  setGuessCount
+  setGuessCount,
+  complete,
+  setComplete
 }: PromptsContainerProps) {
   const [inputs, setInputs] = useState<any>({});
   const [isChecking, setIsChecking] = useState(false);
@@ -45,6 +49,8 @@ function PromptsContainer({
         isChecking={isChecking}
         inputs={inputs}
         guessCount={guessCount}
+        complete={complete}
+        setComplete={setComplete}
       />
       <PromptInput
         prompt={formatPrompt()}

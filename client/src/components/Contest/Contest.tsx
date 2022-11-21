@@ -13,6 +13,7 @@ function Contest() {
     useState<firebase.firestore.DocumentData | null>(null);
 
   const [guessCount, setGuessCount] = useState(0);
+  const [complete, setComplete] = useState(false);
 
   // FETCH IMAGES AND CONTEST
   useEffect(() => {
@@ -28,12 +29,18 @@ function Contest() {
 
   return (
     <div className="contest">
-      <ImagesContainer images={contest.images} guessCount={guessCount} />
+      <ImagesContainer
+        images={contest.images}
+        guessCount={guessCount}
+        complete={complete}
+      />
       <PromptsContainer
         prompt={contest.solutionPrompt}
         promptArray={contest.keywords}
         guessCount={guessCount}
         setGuessCount={setGuessCount}
+        complete={complete}
+        setComplete={setComplete}
       />
     </div>
   );

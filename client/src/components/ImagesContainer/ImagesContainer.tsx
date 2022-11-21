@@ -7,9 +7,14 @@ import { BiLockAlt } from 'react-icons/bi';
 type ImagesContainerProps = {
   images: string[];
   guessCount: number;
+  complete: boolean;
 };
 
-function ImagesContainer({ images, guessCount }: ImagesContainerProps) {
+function ImagesContainer({
+  images,
+  guessCount,
+  complete
+}: ImagesContainerProps) {
   const [active, setActive] = useState(images[0]);
 
   const handleClick = (url: string) => {
@@ -17,7 +22,9 @@ function ImagesContainer({ images, guessCount }: ImagesContainerProps) {
   };
 
   useEffect(() => {
-    setActive(images[guessCount]);
+    if (guessCount < 5) {
+      setActive(images[guessCount]);
+    }
   }, [images, guessCount]);
 
   return (
@@ -33,7 +40,7 @@ function ImagesContainer({ images, guessCount }: ImagesContainerProps) {
               key={index}
             >
               <ImageCard imageUrl={image} />
-              {index < guessCount + 1 || (
+              {index < guessCount + 1 || complete || (
                 <div className="overlay">
                   <BiLockAlt color="white" size="2em" className="lock" />
                 </div>
