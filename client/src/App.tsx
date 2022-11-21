@@ -26,7 +26,7 @@ function App() {
   return (
     <ChakraProvider>
       <div className="App">
-        <Navbar user={user} setDarkmode={setDarkmode}/>
+        <Navbar user={user} setDarkmode={setDarkmode} darkMode={darkmode} />
         <Contest />
       </div>
     </ChakraProvider>

@@ -10,12 +10,15 @@ import {
 import React from 'react';
 import { AiFillQuestionCircle } from 'react-icons/ai';
 
-const HowToModal: React.FC = () => {
+type Props = {
+  darkMode:boolean;
+}
+const HowToModal: React.FC<Props> = ({ darkMode }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       <button onClick={onOpen}>
-        <AiFillQuestionCircle color="#E2E8F0" size="2em" />
+        <AiFillQuestionCircle color={darkMode ? "#E2E8F0" : "black"} size="2em" />
       </button>
 
       <Modal onClose={onClose} isOpen={isOpen} isCentered>

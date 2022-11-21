@@ -12,7 +12,11 @@ import {
 import { CgProfile } from 'react-icons/cg';
 import SignOut from '../SignOut/SignOut';
 
-const ProfileModal: React.FC = () => {
+type Props = {
+  darkMode:boolean;
+}
+
+const ProfileModal: React.FC<Props> = ({darkMode}) => {
   const name = 'Hello World';
   const score = 5;
   const images = [
@@ -27,7 +31,7 @@ const ProfileModal: React.FC = () => {
     <>
       <button onClick={onOpen}>
         <span>
-          <CgProfile color="white" size="2em" />
+          <CgProfile color={darkMode ? "#E2E8F0" : "black"} size="2em" />
         </span>
       </button>
 

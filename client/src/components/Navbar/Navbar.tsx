@@ -8,16 +8,17 @@ import SettingsModal from '../SettingsModal/SettingsModal';
 type NavbarProps = {
   setDarkmode: React.Dispatch<React.SetStateAction<boolean>>;
   user: any;
+  darkMode:boolean;
 };
 
-function Navbar({ user, setDarkmode }: NavbarProps) {
+function Navbar({ user, setDarkmode, darkMode }: NavbarProps) {
   return (
     <div className="navbar">
       <h1>TRINITY</h1>
       <div className='right'>
-        <HowToModal />
-        {user ? <ProfileModal /> : <SignIn />}
-        <SettingsModal setDarkmode={setDarkmode} />
+        <HowToModal darkMode={darkMode} />
+        {user ? <ProfileModal darkMode={darkMode} /> : <SignIn />}
+        <SettingsModal setDarkmode={setDarkmode} darkMode={darkMode} />
       </div>
     </div>
   );
