@@ -27,7 +27,7 @@ export const fetchContest = async (
 ) => {
   setContest([]);
   await firestore
-    .collection('contests')
+    .collection('currentContest')
     .orderBy('expirationDate', 'desc')
     .limit(1)
     .get()
