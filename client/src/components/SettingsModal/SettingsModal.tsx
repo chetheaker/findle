@@ -14,12 +14,14 @@ import {
   type Props = {
     setDarkmode: React.Dispatch<React.SetStateAction<boolean>>;
     darkMode:boolean;
+    setColormode: React.Dispatch<React.SetStateAction<boolean>>
+    colormode:boolean;
   }
 
-  const SettingsModal: React.FC<Props> = ({setDarkmode, darkMode}) => {
+  const SettingsModal: React.FC<Props> = ({setDarkmode, darkMode, setColormode, colormode}) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const handleClick = () => setDarkmode(prev => !prev)
-    const handleChange = () => setDarkmode(prev => !prev)
+    const handleChange = () => setColormode(prev => !prev)
     return (
       <>
         <button onClick={onOpen}>
@@ -42,7 +44,7 @@ import {
                 <div className="theme">
                     Color Theme
                     <div className="toggle">
-                        <input type="checkbox" id="unchecked" className="cbx hidden" onChange={handleChange} defaultChecked={!darkMode} />
+                        <input type="checkbox" id="unchecked" className="cbx hidden" onChange={handleChange} defaultChecked={!colormode} />
                         <label htmlFor="unchecked" className="lbl"></label>
                     </div>
                 </div>

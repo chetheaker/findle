@@ -15,7 +15,7 @@
 
 .prompts .known {
   color: var(--secondary-color);
-  background-color: #38a169;
+  background-color: var(--correct-color);
   padding: 1rem;
   border-radius: 0.5rem;
 }
@@ -69,7 +69,7 @@
 
 /* Style the back side */
 .flip-card-back {
-  background-color: #38a169;
+  background-color: var(--correct-color);
   color: white;
   transform: rotateX(180deg);
 }

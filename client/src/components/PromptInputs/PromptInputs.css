@@ -26,7 +26,7 @@
 
 .prompt-input:disabled {
   color: white;
-  background-color: #38a169;
+  background-color: var(--correct-color);
   text-shadow: none;
   text-align: center;
   border: none;

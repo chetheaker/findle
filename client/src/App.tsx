@@ -23,6 +23,7 @@ function App() {
   });
   const [user] = useAuthState(auth as any);
   const [darkmode, setDarkmode] = useState(true);
+  const [colormode, setColormode] = useState(true);
   const root = document.getElementById('root') as HTMLElement
   useEffect(()=> {
     if (darkmode) {
@@ -34,11 +35,21 @@ function App() {
       root.style.setProperty("--secondary-color", "black");
     }
   },[darkmode])
+  useEffect(()=> {
+    if (colormode) {
+      root.style.setProperty("--correct-color", "#38a169");
+      root.style.setProperty("--wrong-color", "#c42f30");
+
+    } else {
+      root.style.setProperty("--correct-color", "#85c0f9");
+      root.style.setProperty("--wrong-color", "#f5793a");
+    }
+  },[colormode])
 
   return (
     <ChakraProvider theme={theme}>
       <div className="App">
-        <Navbar user={user} setDarkmode={setDarkmode} darkMode={darkmode} />
+        <Navbar user={user} setDarkmode={setDarkmode} darkMode={darkmode} setColormode={setColormode} colormode={colormode} />
         <Contest />
       </div>
     </ChakraProvider>

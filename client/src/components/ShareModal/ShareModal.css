@@ -12,16 +12,16 @@
 .results-box-container .box {
   width: 25px;
   height: 25px;
-  background-color: red;
+  background-color: var(--wrong-color);
   border-radius: 0.25rem;
 }
 
 .results-box-container .incorrect {
-  background-color: #c42f30;
+  background-color: var(--wrong-color);
 }
 
 .results-box-container .correct {
-  background-color: #38a169;
+  background-color: var(--correct-color);
 }
 
 .results-body {
@@ -56,7 +56,7 @@
 .results-body .share-image .share {
   width: 100px;
   height: 30px;
-  background-color: #38a169;
+  background-color: var(--correct-color);
   border-radius: 1rem;
   display: flex;
   gap: 10px;
