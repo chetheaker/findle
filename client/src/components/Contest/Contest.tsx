@@ -6,6 +6,7 @@ import firebase from 'firebase/compat/app';
 import Spinner from '../Spinner/Spinner';
 import PromptsContainer from '../PromptsContainer/PromptsContainer';
 import ImagesContainer from '../ImagesContainer/ImagesContainer';
+import Timer from '../Timer/Timer';
 
 function Contest() {
   const [isFetching, setIsFetching] = useState(true);
@@ -31,6 +32,7 @@ function Contest() {
 
   return (
     <div className="contest">
+      {contest.createdAt && <Timer creationDate={contest.createdAt} />}
       <ImagesContainer
         images={contest.images}
         guessCount={guessCount}

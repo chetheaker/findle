@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
+import './style.css'
 
 type TimerProps = {
   creationDate: number;
 };
 
 const Timer = ({ creationDate }: TimerProps) => {
-const endDate = new Date(creationDate + 86400).getTime();
-let hoursLeft = 0;
-let minutesLeft = 0
-let secondsLeft = 0
+const endDate = new Date((creationDate + 86400000)).getTime();
+const [hoursLeft, setHoursLeft] = useState(0)
+const [minutesLeft, setMinutesLeft] = useState(0)
+const [secondsLeft, setSecondsLeft] = useState(0)
+console.log(endDate)
+
  useEffect(() => {
    setInterval(() => {
    
@@ -24,16 +27,16 @@ let secondsLeft = 0
    const hour = minute * 60;
    
    
-   hoursLeft = Math.trunc(remainingTime / hour);
+   setHoursLeft(Math.trunc(remainingTime / hour));
    
-   minutesLeft = Math.trunc((remainingTime % hour) / minute);
+   setMinutesLeft(Math.trunc((remainingTime % hour) / minute));
    
-   secondsLeft = Math.trunc((remainingTime % minute) / second);
+   setSecondsLeft(Math.trunc((remainingTime % minute) / second));
    
    }, 1000);
  })
 return (
-  <div>Timer:{hoursLeft} {minutesLeft} {secondsLeft}</div>
+  <div className='white'>Next Contest in {hoursLeft !== 0 && hoursLeft < 2 ? `${hoursLeft} hour` : `${hoursLeft} hours`} {minutesLeft !== 0 && minutesLeft < 2 ? `${minutesLeft} minute` : `${minutesLeft} minutes`} {secondsLeft !== 0 && secondsLeft < 2 ? `${secondsLeft} second` : `${secondsLeft} seconds`}</div>
 )
 };
 

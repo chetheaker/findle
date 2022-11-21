@@ -9,8 +9,6 @@ import { openAIGeneration } from '../../services/generateOpAI';
 import { upload2Cloudinary } from '../../services/upload2Cloudinary';
 import Spinner from '../Spinner/Spinner';
 
-import Timer from '../Timer/Timer';
-
 type CreateImageProps = {
   setImages: React.Dispatch<
     React.SetStateAction<firebase.firestore.DocumentData[]>
@@ -88,11 +86,6 @@ function CreateImage({ setImages, contests, user }: CreateImageProps) {
                 <div className="timerDiv">
                   <h1>
                     This contest will end in:{' '}
-                    <Timer
-                      expirationDate={
-                        contests.length ? contests[0].expirationDate : 0
-                      }
-                    />
                   </h1>
                 </div>
                 <div className="word3Container">
