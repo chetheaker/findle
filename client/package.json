@@ -47,5 +47,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://oaidalleapiprodscus.blob.core.windows.net/"
+  "proxy": "https://oaidalleapiprodscus.blob.core.windows.net/",
+  "devDependencies": {
+    "cypress": "^11.1.0"
+  }
 }
