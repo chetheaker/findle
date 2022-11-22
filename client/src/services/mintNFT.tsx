@@ -24,12 +24,15 @@ const CONFIG = {
   imgName: 'Solucky',
   description: 'PROMT',
   attributes: [
-      {trait_type: 'DATE', value: ''},
-      {trait_type: 'OBJECT', value: ''},
-      {trait_type: 'AACTION', value: ''}
+    {trait_type: 'DATE', value: ''},
+    {trait_type: 'OBJECT', value: ''},
+    {trait_type: 'ACTION', value: ''},
+    {trait_type: 'SITUATION', value: ''},
+    {trait_type: 'LOCATION', value: ''},
+    {trait_type: 'CLOTHES', value: ''}
   ],
   sellerFeeBasisPoints: 500,//500 bp = 5%
-  symbol: 'SOLUCKY',
+  symbol: 'TRINITY',
   creators: [
     { address: WALLET.publicKey, share: 100 }
   ]

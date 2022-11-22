@@ -32,9 +32,11 @@ function Contest() {
 
   if (isFetching || !contest) return <Spinner />;
 
+  let isOpenMint = true;
+
   return (
     <div className="contest">
-      <ShareModal isOpen={false} onClose={() => { return 0}} prompt='test promt' inputs='' promptArray={[]} complete={true} />
+      <MintModal isOpen={isOpenMint} onClose={() => { isOpenMint = false }} prompt='test promt' inputs='' promptArray={[]} complete={true} />
       {contest.createdAt && <Timer creationDate={contest.createdAt} />}
       <ImagesContainer
         images={contest.images}

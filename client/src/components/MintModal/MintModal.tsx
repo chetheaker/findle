@@ -1,4 +1,4 @@
-import './ShareModal.css';
+import './MintModal.css';
 import {
   Modal,
   ModalOverlay,
@@ -18,6 +18,29 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../services/fireBaseInit';
 import SignIn from '../SignIn/SignIn';
 
+// import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+// import { Metaplex, keypairIdentity, bundlrStorage, toMetaplexFile, toBigNumber } from "@metaplex-foundation/js";
+
+// // const secret =  [];//require("./keypair.json");
+
+
+// const QUICKNODE_RPC = 'https://warmhearted-winter-river.solana-devnet.discover.quiknode.pro/f0a750831d453a3e404bfcd2017bbe0f601242a3/';
+// const SOLANA_CONNECTION = new Connection(QUICKNODE_RPC);
+
+// const WALLET = Keypair.fromSecretKey(new Uint8Array(secret));
+
+// const METAPLEX = Metaplex.make(SOLANA_CONNECTION)
+//   .use(keypairIdentity(WALLET))
+//   .use(bundlrStorage({
+//     address: 'https://devnet.bundlr.network',
+//     providerUrl: QUICKNODE_RPC,
+//     timeout: 60000,
+//   }));
+
+const got = require('got');
+
+
+
 type ShareProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -36,7 +59,7 @@ type CloudData = {
   secure_url: string;
 };
 
-const ShareModal = ({
+const MintModal = ({
   onClose,
   isOpen,
   prompt,
@@ -44,6 +67,7 @@ const ShareModal = ({
   promptArray,
   complete
 }: ShareProps) => {
+  
   const [userImageUrl, setUserImageUrl] = useState('');
   const [isGenerating, setIsGenerating] = useState(true);
   const [userPrompt, setUserPrompt] = useState('');
@@ -78,6 +102,20 @@ const ShareModal = ({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [complete, auth]);
+
+  // async function uploadImage( imgUrl: string, imgName: string ): Promise<string>  {
+  //   console.log(`Step 1 - Uploading Image`);
+  //   const imgBuffer = await got( imgUrl, { responseType: 'buffer' });
+  //   const imgMetaplexFile = toMetaplexFile(imgBuffer, imgName);
+  //   const imgUri = await METAPLEX.storage().upload(imgMetaplexFile);
+  //   console.log(`   Image URI:`, imgUri);
+  //   return imgUri
+  // }
+
+  function mintBtn() { 
+    console.log(`hellooooo`);
+    // console.log( uploadImage( userImageUrl, 'test') )
+  }
 
   return (
     <Modal onClose={onClose} size="xl" isOpen={isOpen}>
@@ -133,6 +171,7 @@ const ShareModal = ({
           </div>
         </ModalBody>
         <ModalFooter>
+          <button onClick={mintBtn} > MINT NFTTTT </button>
           <div className="modal-time">Next [GAMENAME] in [TIME]</div>
         </ModalFooter>
       </ModalContent>
@@ -140,4 +179,4 @@ const ShareModal = ({
   );
 };
 
-export default ShareModal;
+export default MintModal;
