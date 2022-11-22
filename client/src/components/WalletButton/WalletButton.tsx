@@ -7,7 +7,7 @@ import './WalletButton.css';
 const WalletButton = () => {
 
   const wallet = useAnchorWallet();
-  const [selectedWallet, setSelectedWallet] = useState(wallet)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const connection = new Connection(String(process.env.REACT_APP_CLUSTER_URL));
   const [balance, setBalance] = useState<number>(-1)
   //let balance : number = 0;
@@ -25,7 +25,7 @@ const WalletButton = () => {
     };
     getBalance();
 
-  }, [wallet]);
+  }, [balance, connection, wallet]);
 
   useEffect(() => console.log(balance),[balance]);
 
