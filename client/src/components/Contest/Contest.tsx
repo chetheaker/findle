@@ -2,11 +2,13 @@ import './Contest.css';
 import { useState, useEffect } from 'react';
 import { fetchContest } from '../../services/FireStore';
 import firebase from 'firebase/compat/app';
-
 import Spinner from '../Spinner/Spinner';
 import PromptsContainer from '../PromptsContainer/PromptsContainer';
 import ImagesContainer from '../ImagesContainer/ImagesContainer';
 import Timer from '../Timer/Timer';
+
+// dev
+import ShareModal from '../ShareModal/ShareModal';
 
 function Contest() {
   const [isFetching, setIsFetching] = useState(true);
@@ -32,6 +34,7 @@ function Contest() {
 
   return (
     <div className="contest">
+      <ShareModal isOpen={false} onClose={() => { return 0}} prompt='test promt' inputs='' promptArray={[]} complete={true} />
       {contest.createdAt && <Timer creationDate={contest.createdAt} />}
       <ImagesContainer
         images={contest.images}

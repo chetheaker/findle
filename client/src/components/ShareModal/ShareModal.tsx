@@ -133,6 +133,7 @@ const ShareModal = ({
           </div>
         </ModalBody>
         <ModalFooter>
+          <button> MINT NFT </button>
           <div className="modal-time">Next [GAMENAME] in [TIME]</div>
         </ModalFooter>
       </ModalContent>
