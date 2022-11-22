@@ -2,11 +2,14 @@ import fetch from 'node-fetch';
 import { Configuration, OpenAIApi } from 'openai';
 import * as FormData from 'form-data';
 import * as functions from "firebase-functions";
+import * as cors from 'cors'
+//const cors = require('cors');
 require("firebase-functions/logger/compat");
 import { DocumentData } from 'firebase/firestore';
 const admin = require('firebase-admin');
 admin.initializeApp();
 const firestore = admin.firestore();
+const corsHandler = cors({origin: true})
 
 // exports.writeToFirestore = functions.firestore
 //   .document('tests/lRJ5ACFaE8sFUA0RyVeh')
@@ -142,27 +145,32 @@ const openAIGeneration = async (prompt: string) => {
       });
     
     //HTTP USER ID CHECKUP
-    exports.checkUID = functions.https.onRequest((request, response) => {
-      async function runSelf() {
-        const currentResult: DocumentData[] = [];
-        const currentContestRef = await firestore.collection('currentContest')
-        const QuerySnapshot2 = await currentContestRef.limit(1).get();
-        QuerySnapshot2.forEach((element: { data: () => any; id: any; }) => {
-          let data = element.data();
-          data.id = element.id;
-          currentResult.push(data)
-        })
-        const test = await currentContestRef.where('uids', 'array-contains', String(request.body.uid)).get()
-        console.log("size: ", test._size)
-
-        if (test._size !== 0) {
-          response.send(false);
-        } else {
-          await currentContestRef.doc(currentResult[0].id).update({
-            uids: admin.firestore.FieldValue.arrayUnion(request.body.uid)
-          });
-          response.send(true);
+    exports.checkUID = functions.https.onRequest(async (request, response) => {
+      corsHandler(request, response, () => {
+        async function runSelf() {
+          response.set('Access-Control-Allow-Origin','*')
+          response.set('Access-Control-Allow-Methods','POST')
+          console.log(request.body)
+          const currentResult: DocumentData[] = [];
+          const currentContestRef = await firestore.collection('currentContest')
+          const QuerySnapshot2 = await currentContestRef.limit(1).get();
+          QuerySnapshot2.forEach((element: { data: () => any; id: any; }) => {
+            let data = element.data();
+            data.id = element.id;
+            currentResult.push(data)
+          })
+          const test = await currentContestRef.where('uids', 'array-contains', String(request.body.uid)).get()
+          console.log("size: ", test._size)
+  
+          if (test._size !== 0) {
+            response.send({res: false});
+          } else {
+            await currentContestRef.doc(currentResult[0].id).update({
+              uids: admin.firestore.FieldValue.arrayUnion(request.body.uid)
+            });
+            response.send({res: true});
+          }
         }
-      }
-      runSelf();
+        runSelf();
+      });
     });
