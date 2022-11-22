@@ -2,7 +2,6 @@ import './style.css';
 import 'firebase/compat/firestore';
 
 import firebase from 'firebase/compat/app';
-import { fetchImages } from '../../services/FireStore';
 import { FormEvent, useState } from 'react';
 import { firestore } from '../../services/fireBaseInit';
 import { openAIGeneration } from '../../services/generateOpAI';
@@ -67,7 +66,6 @@ function CreateImage({ setImages, contests, user }: CreateImageProps) {
         console.log('error', e);
       }
 
-      fetchImages(setImages);
       setPromptInput('');
       setIsFetching(false);
     } else {
