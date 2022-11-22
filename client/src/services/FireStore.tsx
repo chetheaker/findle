@@ -2,16 +2,19 @@ import { firestore } from '../services/fireBaseInit';
 import firebase from 'firebase/compat/app';
 
 export const checkOrAddUIDToContest = async (uid: any) => {
-  console.log(uid)
+  console.log(uid);
   const url = 'https://us-central1-trinity-f4908.cloudfunctions.net/checkUID';
-  const config = {method: "POST", body: JSON.stringify(uid)}
-  let res;
-  await fetch(url, config)
-    .then((response) => response.json())
-    .then((data) => {
-      res = data;
-    })
-    return res;
+  const config = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'http://localhost:3000'
+    },
+    body: JSON.stringify({ uid })
+  };
+  const response = await fetch(url, config);
+  const { res } = await response.json();
+  return res;
 };
 
 export const fetchContest = async (

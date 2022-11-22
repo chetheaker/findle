@@ -18,6 +18,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../services/fireBaseInit';
 import SignIn from '../SignIn/SignIn';
 import Timer from '../Timer/Timer';
+import { checkOrAddUIDToContest } from '../../services/FireStore';
 
 type ShareProps = {
   isOpen: boolean;
@@ -26,7 +27,7 @@ type ShareProps = {
   inputs: any;
   promptArray: Prompt[];
   complete: boolean;
-  creationDate:number
+  creationDate: number;
 };
 
 type Prompt = {
@@ -51,15 +52,20 @@ const ShareModal = ({
   const [isGenerating, setIsGenerating] = useState(true);
   const [userPrompt, setUserPrompt] = useState('');
   const [user] = useAuthState(auth as any);
+  const [shouldGenerate, setShouldGenerate] = useState(false);
+  const [fourthLayer, setFourthLayer] = useState(true);
 
   const generateUserImage = async (promptToGenerate: string) => {
-    const aiUrl = await openAIGeneration(promptToGenerate);
-    console.log('aiUrl', aiUrl);
-    if (!aiUrl) return;
-    const cloudData = (await upload2Cloudinary(aiUrl)) as CloudData;
-    console.log('cloudUrl', cloudData.secure_url);
-    setUserImageUrl(cloudData.secure_url);
-    setIsGenerating(false);
+    const gen = await checkOrAddUIDToContest(user!.uid);
+    setShouldGenerate(gen);
+    setFourthLayer(false);
+    if (gen) {
+      const aiUrl = await openAIGeneration(promptToGenerate);
+      if (!aiUrl) return;
+      const cloudData = (await upload2Cloudinary(aiUrl)) as CloudData;
+      setUserImageUrl(cloudData.secure_url);
+      setIsGenerating(false);
+    }
   };
 
   useEffect(() => {
@@ -107,13 +113,26 @@ const ShareModal = ({
             <div className="share-image">
               {user ? (
                 isGenerating ? (
-                  <div className="image-loading">
-                    <h1>
-                      We're generating your unique AI generated image. <br />
-                      Sit tight...
-                    </h1>
-                    <Spinner />
-                  </div>
+                  shouldGenerate ? (
+                    <div className="image-loading">
+                      <h1>
+                        We're generating your unique AI generated image. <br />
+                        Sit tight...
+                      </h1>
+                      <Spinner />
+                    </div>
+                  ) : (
+                    <div className="image-loading">
+                      {fourthLayer ? (
+                        <Spinner />
+                      ) : (
+                        <h1>
+                          You have already generated an image today, come back
+                          tomorrow!
+                        </h1>
+                      )}
+                    </div>
+                  )
                 ) : (
                   <ImageCard imageUrl={userImageUrl} />
                 )
@@ -137,7 +156,7 @@ const ShareModal = ({
           </div>
         </ModalBody>
         <ModalFooter>
-          <Timer creationDate={creationDate}/>
+          <Timer creationDate={creationDate} />
         </ModalFooter>
       </ModalContent>
     </Modal>
