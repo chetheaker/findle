@@ -9,6 +9,7 @@ import Contest from './components/Contest/Contest';
 import Navbar from './components/Navbar/Navbar';
 
 function App() {
+  
   const theme = extendTheme({
     components: {
       Modal: {
