@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../services/fireBaseInit';
 import SignIn from '../SignIn/SignIn';
+import Timer from '../Timer/Timer';
 
 type ShareProps = {
   isOpen: boolean;
@@ -25,6 +26,7 @@ type ShareProps = {
   inputs: any;
   promptArray: Prompt[];
   complete: boolean;
+  creationDate:number
 };
 
 type Prompt = {
@@ -42,7 +44,8 @@ const ShareModal = ({
   prompt,
   inputs,
   promptArray,
-  complete
+  complete,
+  creationDate
 }: ShareProps) => {
   const [userImageUrl, setUserImageUrl] = useState('');
   const [isGenerating, setIsGenerating] = useState(true);
@@ -134,7 +137,7 @@ const ShareModal = ({
           </div>
         </ModalBody>
         <ModalFooter>
-          <div className="modal-time">Next [GAMENAME] in [TIME]</div>
+          <Timer creationDate={creationDate}/>
         </ModalFooter>
       </ModalContent>
     </Modal>

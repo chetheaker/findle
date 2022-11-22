@@ -32,7 +32,6 @@ function Contest() {
 
   return (
     <div className="contest">
-      {contest.createdAt && <Timer creationDate={contest.createdAt} />}
       <ImagesContainer
         images={contest.images}
         guessCount={guessCount}
@@ -45,6 +44,7 @@ function Contest() {
         setGuessCount={setGuessCount}
         complete={complete}
         setComplete={setComplete}
+        creationDate={contest.createdAt}
       />
     </div>
   );

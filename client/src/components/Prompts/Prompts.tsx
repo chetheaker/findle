@@ -12,6 +12,7 @@ type PromptsProps = {
   guessCount: number;
   complete: boolean;
   setComplete: React.Dispatch<React.SetStateAction<boolean>>;
+  creationDate:number;
 };
 
 type Prompt = {
@@ -27,7 +28,8 @@ function Prompts({
   inputs,
   guessCount,
   complete,
-  setComplete
+  setComplete,
+  creationDate
 }: PromptsProps) {
   const promptAsArray = prompt.split(' ');
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -199,6 +201,7 @@ function Prompts({
         prompt={prompt}
         promptArray={promptArray}
         complete={complete}
+        creationDate={creationDate}
       />
     </>
   );
