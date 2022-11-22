@@ -11,7 +11,6 @@ const endDate = new Date((creationDate + 86400000)).getTime();
 const [hoursLeft, setHoursLeft] = useState(0)
 const [minutesLeft, setMinutesLeft] = useState(0)
 const [secondsLeft, setSecondsLeft] = useState(0)
-console.log(endDate)
 
  useEffect(() => {
    setInterval(() => {
