@@ -65,9 +65,10 @@ const ShareModal = ({
     for (let i = 0; i < userPromptArray.length; i++) {
       if (!isNaN(+userPromptArray[i])) {
         const type: string = promptArray[+userPromptArray[i]].type;
-        const userInput = JSON.parse(localStorage.getItem('inputs') as string)[
-          type
-        ];
+        const userInputs =
+          JSON.parse(localStorage.getItem('inputs') as string) ||
+          JSON.parse(localStorage.getItem('answers') as string);
+        const userInput = userInputs[type];
         userPromptArray[i] = userInput;
       }
     }
