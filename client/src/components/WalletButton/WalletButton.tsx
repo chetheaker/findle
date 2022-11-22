@@ -1,34 +1,38 @@
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { Connection } from '@solana/web3.js';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import './WalletButton.css';
 
 const WalletButton = () => {
 
   const wallet = useAnchorWallet();
+  const [selectedWallet, setSelectedWallet] = useState(wallet)
   const connection = new Connection(String(process.env.REACT_APP_CLUSTER_URL));
-
-  let balance : number = 1;
+  const [balance, setBalance] = useState<number>(-1)
+  //let balance : number = 0;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect( () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log(wallet)
     const getBalance = async () => {
-      const userPubKey = wallet?.publicKey!;
+      const userPubKey = wallet? wallet.publicKey! : undefined;
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      balance = await connection.getBalance(userPubKey);
-      balance = Math.floor((balance/1000000000)*100)/100; // 1 billion lamports to 1 SOL (2 decimals)
+      let balanceRes = userPubKey ? await connection.getBalance(userPubKey) : -1;
+      balanceRes = Math.floor((balanceRes/1000000000)*100)/100; // 1 billion lamports to 1 SOL (2 decimals)
+      setBalance(balanceRes)
       console.log('SOL', balance);
     };
     getBalance();
 
-  }, []);
+  }, [wallet]);
 
+  useEffect(() => console.log(balance),[balance]);
 
   return (
     <div className="btnContainer" >
       <WalletMultiButton/>
-      { balance > 0 && <div className="userBalance">{balance} SOL</div> }
+      { balance >= 0 && <div className="userBalance">{balance} SOL</div> }
     </div>  
   );
 };
