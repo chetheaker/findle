@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import './WalletButton.css';
 
 const WalletButton = () => {
-
+  
   const wallet = useAnchorWallet();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const connection = new Connection(String(process.env.REACT_APP_CLUSTER_URL));
@@ -26,8 +26,6 @@ const WalletButton = () => {
     getBalance();
 
   }, [balance, connection, wallet]);
-
-  useEffect(() => console.log(balance),[balance]);
 
   return (
     <div className="btnContainer" >
