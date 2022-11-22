@@ -20,7 +20,7 @@ const firestore = admin.firestore();
 //   });
 
 
-  exports.scheduledFunction = functions.pubsub.schedule('every 3 minutes')
+  exports.scheduledFunction = functions.pubsub.schedule('59 23 * * 1-7')
   .onRun((context) => {
 //CLOUDINARY MODULE
   const upload2Cloudinary = async (aiUrl: string) => {
@@ -103,7 +103,8 @@ const openAIGeneration = async (prompt: string) => {
       createdAt: Date.now(),
       images: cdnImages,
       solutionPrompt: prompt,
-      keywords: result[0].keywords
+      keywords: result[0].keywords,
+      uids: []
     }
 
     await currentContestRef.add(newContest);
@@ -130,7 +131,8 @@ const openAIGeneration = async (prompt: string) => {
         createdAt: Date.now(),
         images: images,
         solutionPrompt: request.body.prompt,
-        keywords: request.body.keywords
+        keywords: request.body.keywords,
+        uids: []
       });
       response.send(true);
     }
@@ -138,3 +140,29 @@ const openAIGeneration = async (prompt: string) => {
       response.send(false)
     }
       });
+    
+    //HTTP USER ID CHECKUP
+    exports.checkUID = functions.https.onRequest((request, response) => {
+      async function runSelf() {
+        const currentResult: DocumentData[] = [];
+        const currentContestRef = await firestore.collection('currentContest')
+        const QuerySnapshot2 = await currentContestRef.limit(1).get();
+        QuerySnapshot2.forEach((element: { data: () => any; id: any; }) => {
+          let data = element.data();
+          data.id = element.id;
+          currentResult.push(data)
+        })
+        const test = await currentContestRef.where('uids', 'array-contains', String(request.body.uid)).get()
+        console.log("size: ", test._size)
+
+        if (test._size !== 0) {
+          response.send(false);
+        } else {
+          await currentContestRef.doc(currentResult[0].id).update({
+            uids: admin.firestore.FieldValue.arrayUnion(request.body.uid)
+          });
+          response.send(true);
+        }
+      }
+      runSelf();
+    });

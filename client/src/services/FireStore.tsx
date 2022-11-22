@@ -1,23 +1,17 @@
 import { firestore } from '../services/fireBaseInit';
 import firebase from 'firebase/compat/app';
 
-export const fetchImages = async (
-  setImages: React.Dispatch<
-    React.SetStateAction<firebase.firestore.DocumentData[]>
-  >
-) => {
-  setImages([]);
-  await firestore
-    .collection('images')
-    .orderBy('likesReceived', 'desc')
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((element) => {
-        let data = element.data();
-        data.imageId = element.id;
-        setImages((arr) => [...arr, data]);
-      });
-    });
+export const checkOrAddUIDToContest = async (uid: any) => {
+  console.log(uid)
+  const url = 'https://us-central1-trinity-f4908.cloudfunctions.net/checkUID';
+  const config = {method: "POST", body: JSON.stringify(uid)}
+  let res;
+  await fetch(url, config)
+    .then((response) => response.json())
+    .then((data) => {
+      res = data;
+    })
+    return res;
 };
 
 export const fetchContest = async (
