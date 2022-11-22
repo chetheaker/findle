@@ -21,7 +21,7 @@ const WalletButton = () => {
       let balanceRes = userPubKey ? await connection.getBalance(userPubKey) : -1;
       balanceRes = Math.floor((balanceRes/1000000000)*100)/100; // 1 billion lamports to 1 SOL (2 decimals)
       setBalance(balanceRes)
-      console.log('SOL', balance);
+      // console.log('SOL', balance);
     };
     getBalance();
 
