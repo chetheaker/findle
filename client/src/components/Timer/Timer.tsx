@@ -7,17 +7,10 @@ type TimerProps = {
 };
 
 const Timer = ({ creationDate }: TimerProps) => {
-<<<<<<< HEAD
   const endDate = new Date(creationDate + 86400000).getTime();
   const [hoursLeft, setHoursLeft] = useState(0);
   const [minutesLeft, setMinutesLeft] = useState(0);
   const [secondsLeft, setSecondsLeft] = useState(0);
-=======
-const endDate = new Date((creationDate + 86400000)).getTime();
-const [hoursLeft, setHoursLeft] = useState(0)
-const [minutesLeft, setMinutesLeft] = useState(0)
-const [secondsLeft, setSecondsLeft] = useState(0)
->>>>>>> test
 
   useEffect(() => {
     setInterval(() => {
