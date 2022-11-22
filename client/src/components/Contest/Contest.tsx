@@ -8,7 +8,7 @@ import ImagesContainer from '../ImagesContainer/ImagesContainer';
 import Timer from '../Timer/Timer';
 
 // dev
-import ShareModal from '../ShareModal/ShareModal';
+import MintModal from '../MintModal/MintModal';
 
 function Contest() {
   const [isFetching, setIsFetching] = useState(true);

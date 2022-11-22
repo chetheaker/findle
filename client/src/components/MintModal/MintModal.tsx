@@ -67,7 +67,7 @@ const MintModal = ({
   promptArray,
   complete
 }: ShareProps) => {
-  
+
   const [userImageUrl, setUserImageUrl] = useState('');
   const [isGenerating, setIsGenerating] = useState(true);
   const [userPrompt, setUserPrompt] = useState('');
@@ -171,7 +171,7 @@ const MintModal = ({
           </div>
         </ModalBody>
         <ModalFooter>
-          <button onClick={mintBtn} > MINT NFTTTT </button>
+          <button onClick={mintBtn} > MINT NFT </button>
           <div className="modal-time">Next [GAMENAME] in [TIME]</div>
         </ModalFooter>
       </ModalContent>
