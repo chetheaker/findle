@@ -1,5 +1,5 @@
 import { Button, useDisclosure } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './Prompts.css';
 import ShareModal from '../ShareModal/ShareModal';
 
@@ -12,7 +12,7 @@ type PromptsProps = {
   guessCount: number;
   complete: boolean;
   setComplete: React.Dispatch<React.SetStateAction<boolean>>;
-  creationDate:number;
+  creationDate: number;
 };
 
 type Prompt = {
@@ -33,6 +33,7 @@ function Prompts({
 }: PromptsProps) {
   const promptAsArray = prompt.split(' ');
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [score, setScore] = useState<number | 'x'>(0);
 
   useEffect(() => {
     const answers = JSON.parse(localStorage.getItem('answers') as string);
@@ -93,6 +94,7 @@ function Prompts({
 
   useEffect(() => {
     if (isChecking) {
+      setScore(guessCount);
       const unknownPrompts = document.getElementsByClassName('unknown');
       for (let i = 0; i < promptArray.length; i++) {
         const inputValue = inputs[promptArray[i].type].toLowerCase();
@@ -143,6 +145,7 @@ function Prompts({
       if (firstInput) firstInput.focus();
 
       if (guessCount >= 5) {
+        setScore('x');
         setComplete(true);
         localStorage.setItem('inputs', JSON.stringify(inputs));
         const unknownCopy: any[] = [...unknownPrompts];
@@ -202,6 +205,7 @@ function Prompts({
         promptArray={promptArray}
         complete={complete}
         creationDate={creationDate}
+        score={score}
       />
     </>
   );

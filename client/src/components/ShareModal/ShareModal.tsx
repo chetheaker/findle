@@ -18,7 +18,10 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../services/fireBaseInit';
 import SignIn from '../SignIn/SignIn';
 import Timer from '../Timer/Timer';
-import { checkOrAddUIDToContest } from '../../services/FireStore';
+import {
+  checkOrAddUIDToContest,
+  updateUserStats
+} from '../../services/FireStore';
 
 type ShareProps = {
   isOpen: boolean;
@@ -28,6 +31,7 @@ type ShareProps = {
   promptArray: Prompt[];
   complete: boolean;
   creationDate: number;
+  score: number | 'x';
 };
 
 type Prompt = {
@@ -46,7 +50,8 @@ const ShareModal = ({
   inputs,
   promptArray,
   complete,
-  creationDate
+  creationDate,
+  score
 }: ShareProps) => {
   const [userImageUrl, setUserImageUrl] = useState('');
   const [isGenerating, setIsGenerating] = useState(true);
@@ -84,6 +89,7 @@ const ShareModal = ({
     setUserPrompt(userPromptArray.join(' '));
     if (user && isGenerating) {
       generateUserImage(userPromptArray.join(' '));
+      updateUserStats(user.uid, score);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

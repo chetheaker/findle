@@ -35,7 +35,7 @@ export const createUserStats = async (uid: string) => {
   });
 };
 
-export const updateUserStats = async (uid: string, score: string) => {
+export const updateUserStats = async (uid: string, score: number | 'x') => {
   const userRef = firestore.collection('users').doc(uid);
   await userRef.update({
     [score]: firebase.firestore.FieldValue.increment(1)
