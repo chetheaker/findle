@@ -2,8 +2,7 @@ import { firestore } from '../services/fireBaseInit';
 import firebase from 'firebase/compat/app';
 
 export const checkOrAddUIDToContest = async (uid: any) => {
-  console.log(uid);
-  const url = 'https://us-central1-trinity-f4908.cloudfunctions.net/checkUID';
+  const BEUrl = 'https://us-central1-trinity-f4908.cloudfunctions.net/checkUID';
   const config = {
     method: 'POST',
     headers: {
@@ -12,7 +11,22 @@ export const checkOrAddUIDToContest = async (uid: any) => {
     },
     body: JSON.stringify({ uid })
   };
-  const response = await fetch(url, config);
+  const response = await fetch(BEUrl, config);
+  const { res } = await response.json();
+  return res;
+};
+
+export const nftMintReq = async ( url: string, wallet: string, uid: string ) => {
+  const BEUrl = 'https://us-central1-trinity-f4908.cloudfunctions.net/checkUID';
+  const config = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'http://localhost:3000'
+    },
+    body: JSON.stringify({url: url, wallet: wallet, uid: uid})
+  };
+  const response = await fetch(BEUrl, config);
   const { res } = await response.json();
   return res;
 };
