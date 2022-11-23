@@ -1,14 +1,17 @@
 import fetch from 'node-fetch';
 import { Configuration, OpenAIApi } from 'openai';
-import * as FormData from 'form-data';
+const FormData = require('form-data')
 import * as functions from 'firebase-functions';
-import * as cors from 'cors';
+const cors = require('cors')
 require('firebase-functions/logger/compat');
 import { DocumentData } from 'firebase/firestore';
+import mintFN from './mint';
 const admin = require('firebase-admin');
 admin.initializeApp();
 const firestore = admin.firestore();
 const corsHandler = cors({ origin: true });
+
+
 
 exports.scheduledFunction = functions.pubsub
   .schedule('59 23 * * 1-7')
@@ -161,11 +164,11 @@ exports.nftMintReq = functions.https.onRequest(async (request, response) => {
     async function runSelf() {
       response.set('Access-Control-Allow-Origin', '*');
       response.set('Access-Control-Allow-Methods', 'POST');
-
       // DATA EVAL
       if (request.body.uid && request.body.url && request.body.wallet) {
         //MINTING PROCESS
-
+        await mintFN(request.body);
+        response.send({ res: true });
       } else {
         response.send({ res: false });
       }
