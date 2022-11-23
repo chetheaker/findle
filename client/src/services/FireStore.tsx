@@ -17,7 +17,7 @@ export const checkOrAddUIDToContest = async (uid: any) => {
 };
 
 export const nftMintReq = async ( url: string, wallet: string, uid: string ) => {
-  const BEUrl = 'https://us-central1-trinity-f4908.cloudfunctions.net/checkUID';
+  const BEUrl = 'https://us-central1-trinity-f4908.cloudfunctions.net/nftMintReq';
   const config = {
     method: 'POST',
     headers: {

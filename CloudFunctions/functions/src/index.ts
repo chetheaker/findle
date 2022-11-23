@@ -154,3 +154,22 @@ exports.checkUID = functions.https.onRequest(async (request, response) => {
     runSelf();
   });
 });
+
+//NFT MINTING
+exports.nftMintReq = functions.https.onRequest(async (request, response) => {
+  corsHandler(request, response, () => {
+    async function runSelf() {
+      response.set('Access-Control-Allow-Origin', '*');
+      response.set('Access-Control-Allow-Methods', 'POST');
+
+      // DATA EVAL
+      if (request.body.uid && request.body.url && request.body.wallet) {
+        //MINTING PROCESS
+
+      } else {
+        response.send({ res: false });
+      }
+    }
+    runSelf();
+  });
+});
