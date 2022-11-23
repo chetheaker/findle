@@ -17,6 +17,31 @@ export const checkOrAddUIDToContest = async (uid: any) => {
   return res;
 };
 
+export const getUserStats = async (uid: string) => {
+  const result = await firestore.collection('users').doc(uid).get();
+  const stats = await result.data();
+  return stats;
+};
+
+export const createUserStats = async (uid: string) => {
+  const usersRef = firestore.collection('users');
+  usersRef.doc(uid).set({
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+    x: 0
+  });
+};
+
+export const updateUserStats = async (uid: string, score: string) => {
+  const userRef = firestore.collection('users').doc(uid);
+  await userRef.update({
+    [score]: firebase.firestore.FieldValue.increment(1)
+  });
+};
+
 export const fetchContest = async (
   setContest: React.Dispatch<
     React.SetStateAction<firebase.firestore.DocumentData>
