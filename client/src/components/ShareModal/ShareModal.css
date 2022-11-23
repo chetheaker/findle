@@ -1,0 +1,78 @@
+.modal-content-results {
+  font-family: Avenir;
+}
+
+.results-box-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.results-box-container .box {
+  width: 25px;
+  height: 25px;
+  border-radius: 0.25rem;
+}
+
+.results-box-container .incorrect {
+  background-color: #c42f30;
+}
+
+.results-box-container .correct {
+  background-color: #38a169;
+}
+
+.results-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.results-body .your-image {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.results-body .image-loading {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.results-body .share-image {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.results-body .share-image .share {
+  width: 100px;
+  height: 30px;
+  background-color: var(--correct-color);
+  border-radius: 1rem;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.results-body .bottom {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+}
+
+.modal-time {
+  text-align: center;
+  width: 100%;
+}

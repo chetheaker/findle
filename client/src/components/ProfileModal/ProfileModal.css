@@ -1,0 +1,39 @@
+.chart{
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-auto-flow: column;
+    height: 40vh;
+    gap: 1rem;
+    text-align: center;
+    font-size: 1.4rem;
+}
+.bar {
+    display: flex;
+    width: 100%;
+    color: rgb(255, 0, 144);
+    background-color: rgb(255, 0, 144);
+    justify-content: center;
+}
+.X {
+    color: rgb(69, 8, 119);
+}
+.bar:hover { 
+    color: white;
+}
+.bar-container {
+    display: flex;
+    align-items: end;
+}
+.X {
+    background-color: rgb(69, 8, 119);
+}
+.history {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.number{
+    font-size: 2rem;
+}

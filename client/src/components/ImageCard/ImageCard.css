@@ -1,0 +1,13 @@
+.image-container {
+  width: 100%;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  background: none;
+}
+
+.image-container .image {
+  min-width: 100%;
+  min-height: 100%;
+  border-radius: inherit;
+}

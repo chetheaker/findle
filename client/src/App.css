@@ -1,110 +1,33 @@
-.App{
-  display:flex;
+.App {
+  display: flex;
   flex-direction: column;
   align-content: space-around;
-  text-shadow: 2px 2px 6px rgb(0 0 0 / 50%);
+  overflow: scroll;
+  height: 100vh;
+  background-color: var(--bg-color);
 }
 
-.h1WC{
+.h1WC {
   align-self: center;
   text-align: center;
   font-size: 40px;
   margin-top: 1%;
 }
 
-.navBar{
-  display:flex;
-  flex-direction:row;
-  background-color: #040404 ;
-  justify-content: space-between;
-  padding: 2rem;
-  text-shadow: 2px 2px 6px rgb(0 0 0 / 50%);
-}
-.logo img{
+.logo img {
   max-width: 10em;
 }
 
-.searchBar{
-  color:white;
-  align-self:center;
+.searchBar {
+  color: var(--secondary-color);
+  align-self: center;
 }
-.container{
+.container {
   overflow-x: scroll;
 }
 
-.signOutButton{
-  appearance: none;
-  background-color: #3f3f3f;
-  border: 2px solid #3f3f3f;
-  border-radius: 15px;
-  box-sizing: border-box;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: normal;
-  margin: 0;
-  min-height: 30px;
-  min-width: 100px;
-  outline: none;
-  padding: 1%;
-  text-align: center;
-  text-decoration: none;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: 10%;
-  will-change: transform;
-  font-family: Avenir;
-  align-self: flex-end;
-  margin: 1%;
-}
-
-.signInDiv{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
-
-}
-
-.signInButton{
-  appearance: none;
-  background-color: #3f3f3f;
-  border: 2px solid #3f3f3f;
-  border-radius: 15px;
-  box-sizing: border-box;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: normal;
-  margin: 0;
-  min-height: 30px;
-  min-width: 30%;
-  outline: none;
-  padding: 1%;
-  text-align: center;
-  text-decoration: none;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: 10%;
-  will-change: transform;
-  font-family: Avenir;
-  align-self: center;
-  margin: 1%;
-  justify-content: center;
-  
-}
-
-
 .word3Container {
-  display:flex;
+  display: flex;
   flex-direction: row;
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
   transition: 0.3s;
@@ -121,12 +44,10 @@
   font-size: 25px;
 }
 
-
-
 .word1 {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  background-color: #4ddbff;;
+  background-color: #4ddbff;
   padding: 2%;
   margin: 3%;
   margin-top: 0%;
@@ -138,9 +59,9 @@
 }
 
 .word2 {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  background-color: #55ff43;;
+  background-color: #55ff43;
   padding: 2%;
   margin: 3%;
   margin-top: 0%;
@@ -152,9 +73,9 @@
 }
 
 .word3 {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  background-color: #e139ff;;
+  background-color: #e139ff;
   padding: 2%;
   margin: 3%;
   margin-top: 0%;
@@ -163,4 +84,9 @@
   width: 80%;
   border: 0;
   align-self: center;
+}
+
+.modal-body {
+  text-align: center;
+  margin-bottom: 1rem;
 }

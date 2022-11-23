@@ -1,0 +1,21 @@
+.navbar {
+  height: 9vh;
+  width: 100vw;
+  background-color: var(--bg-color);
+  padding: 0 7.5vh;
+  border-bottom: solid 1px #6e7d93;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar h1 {
+  color: var(--secondary-color);
+  font-family: Avenir;
+  font-weight: bold;
+  font-size: 2rem;
+}
+.navbar .right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
