@@ -62,7 +62,7 @@
   height: 25px;
   position: absolute;
 }
-@media(max-width: 675px) {
+@media(max-width: 850px) {
   .image-cont {
     width: 75vw;
     position: relative;

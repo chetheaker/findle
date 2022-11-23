@@ -29,10 +29,10 @@
   width: 110px;
   height: 40px;
   border-radius: 0.5rem;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  perspective: 1000px; 
 }
 
-/* This container is needed to position the front and back side */
+
 .flip-card-inner {
   position: relative;
   width: 100%;
@@ -42,17 +42,15 @@
   transform-style: preserve-3d;
 }
 
-/* Do an horizontal flip when you move the mouse over the flip box container */
 .flip {
   transform: rotateX(180deg);
 }
 
-/* Position the front and back side */
 .flip-card-front, .flip-card-back {
   position: absolute;
   width: 100%;
   height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari */
+  -webkit-backface-visibility: hidden; 
   backface-visibility: hidden;
   border-radius: 0.5rem;
   display: flex;
@@ -60,14 +58,14 @@
   justify-content: center;
 }
 
-/* Style the front side (fallback if image is missing) */
+
 .flip-card-front {
   margin: 0;
   background-color: var(--secondary-color);
   color: var(--bg-color);
 }
 
-/* Style the back side */
+
 .flip-card-back {
   background-color: var(--correct-color);
   color: white;
@@ -76,13 +74,13 @@
 .guess {
   background: var(--correct-color) !important;
 }
-@media(max-width: 675px) {
+@media(max-width: 850px) {
   .flip-card {
     background-color: transparent;
     width: 70px;
     height: 30px;
     border-radius: 0.5rem;
-    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    perspective: 1000px; 
   }
   #prompt-form {
     justify-content: center;
