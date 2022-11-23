@@ -54,7 +54,7 @@ const ProfileModal: React.FC<Props> = ({ darkMode }) => {
             <div className='stats'>
             <div className='history'>
               <div>
-                <div className='number'>{(totalPlayed - totalFails) / totalPlayed * 100}</div>
+                <div className='number'>{(Math.round((totalPlayed - totalFails) / totalPlayed * 1000) / 10)}</div>
                 <div>WIN%</div>
               </div>
               <div>

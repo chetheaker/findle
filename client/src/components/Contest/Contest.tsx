@@ -31,22 +31,26 @@ function Contest() {
   if (isFetching || !contest) return <Spinner />;
 
   return (
-    <div className="contest">
-      <ImagesContainer
-        images={contest.images}
-        guessCount={guessCount}
-        complete={complete}
-      />
-      <PromptsContainer
-        prompt={contest.solutionPrompt}
-        promptArray={contest.keywords}
-        guessCount={guessCount}
-        setGuessCount={setGuessCount}
-        complete={complete}
-        setComplete={setComplete}
-        creationDate={contest.createdAt}
-      />
-    </div>
+    <>
+      <div className="imagecontainer">
+        <ImagesContainer
+          images={contest.images}
+          guessCount={guessCount}
+          complete={complete}
+        />
+      </div>
+      <div className='promptscontainer'>
+        <PromptsContainer
+          prompt={contest.solutionPrompt}
+          promptArray={contest.keywords}
+          guessCount={guessCount}
+          setGuessCount={setGuessCount}
+          complete={complete}
+          setComplete={setComplete}
+          creationDate={contest.createdAt}
+        />
+      </div>
+    </>
   );
 }
 
