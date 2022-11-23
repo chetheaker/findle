@@ -13,7 +13,7 @@ import ImageCard from '../ImageCard/ImageCard';
 import { AiOutlineShareAlt } from 'react-icons/ai';
 import { openAIGeneration } from '../../services/generateOpAI';
 import { upload2Cloudinary } from '../../services/upload2Cloudinary';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../services/fireBaseInit';
 import SignIn from '../SignIn/SignIn';
@@ -22,6 +22,8 @@ import {
   checkOrAddUIDToContest,
   updateUserStats
 } from '../../services/FireStore';
+import ProfileContext from '../../ProfileContext';
+import { DocumentData } from 'firebase/firestore';
 
 type ShareProps = {
   isOpen: boolean;
@@ -59,12 +61,25 @@ const ShareModal = ({
   const [user] = useAuthState(auth as any);
   const [shouldGenerate, setShouldGenerate] = useState(false);
   const [fourthLayer, setFourthLayer] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setStats] =
+    useContext<[DocumentData | boolean, React.Dispatch<any>]>(ProfileContext);
 
   const generateUserImage = async (promptToGenerate: string) => {
     const gen = await checkOrAddUIDToContest(user!.uid);
     setShouldGenerate(gen);
     setFourthLayer(false);
     if (gen) {
+      if (!score) return;
+      console.log('uid', user!.uid);
+      updateUserStats(user!.uid, score);
+      setStats((prev: any) => {
+        const newScore = prev[score] + 1;
+        return {
+          ...prev,
+          [score]: newScore
+        };
+      });
       const aiUrl = await openAIGeneration(promptToGenerate);
       if (!aiUrl) return;
       const cloudData = (await upload2Cloudinary(aiUrl)) as CloudData;
@@ -89,7 +104,6 @@ const ShareModal = ({
     setUserPrompt(userPromptArray.join(' '));
     if (user && isGenerating) {
       generateUserImage(userPromptArray.join(' '));
-      updateUserStats(user.uid, score);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
