@@ -34,7 +34,6 @@ const ProfileModal: React.FC<Props> = ({ darkMode }) => {
       const scoreArray = Object.entries(stats)
       setTopscore(scoreArray.sort((a, b) => b[1] - a[1])[0][1])
       setTotalPlayed(scoreArray.reduce((acc, cv) => acc + cv[1], 0))
-      console.log(scoreArray)
       setTotalFails(scoreArray[scoreArray.findIndex(product => product.some(item => item === 'X'))][1])
     }
   },[stats])
@@ -49,13 +48,20 @@ const ProfileModal: React.FC<Props> = ({ darkMode }) => {
       <Modal onClose={onClose} size={size} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
-          <SignOut />
-          <ModalHeader>Hello, {user!.displayName!.split(' ')[0]}</ModalHeader>
+          <ModalHeader fontSize="2rem">Statistics</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <div className='stats'>
-              <div>Win percentage: {(totalPlayed - totalFails) / totalPlayed * 100}%</div>
-              <div>Total played: {totalPlayed}</div>
+            <div className='history'>
+              <div>
+                <div className='number'>{(totalPlayed - totalFails) / totalPlayed * 100}</div>
+                <div>WIN%</div>
+              </div>
+              <div>
+                <div className='number'>{totalPlayed}</div>
+                <div>Played</div>
+              </div>
+              </div>
             </div>
             <div className='chart'>
             {stats &&
@@ -70,7 +76,8 @@ const ProfileModal: React.FC<Props> = ({ darkMode }) => {
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+            <SignOut />
+            <Button onClick={onClose} color="black" backgroundColor="lightgray" marginRight="10px">Close</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

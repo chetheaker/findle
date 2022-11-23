@@ -14,7 +14,7 @@
     background-color: rgb(255, 0, 144);
     justify-content: center;
 }
-.x {
+.X {
     color: rgb(69, 8, 119);
 }
 .bar:hover { 
@@ -24,6 +24,16 @@
     display: flex;
     align-items: end;
 }
-.x {
+.X {
     background-color: rgb(69, 8, 119);
+}
+.history {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.number{
+    font-size: 2rem;
 }
