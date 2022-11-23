@@ -3,6 +3,7 @@ import { WalletNotConnectedError } from '@solana/wallet-adapter-base';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { Connection, Transaction, SystemProgram, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
 import { useCallback } from 'react';
+import { nftMintReq } from '../../services/FireStore';
 // import './MintButton.css';
 
 type MintButtonProps = {
@@ -24,7 +25,7 @@ function MintButton ( { uid, userImageUrl, userPrompt }: MintButtonProps ) {
       console.log(bal/LAMPORTS_PER_SOL);
     });
 
-    let lamportsI = LAMPORTS_PER_SOL*1;
+    let lamportsI = LAMPORTS_PER_SOL*Number(process.env.REACT_APP_MINT_COST);
     console.log(publicKey.toBase58());
     console.log("lamports sending: {}", lamportsI)
     const transaction = new Transaction().add(
@@ -36,15 +37,9 @@ function MintButton ( { uid, userImageUrl, userPrompt }: MintButtonProps ) {
     );
 
     const signature = await sendTransaction(transaction, connection);
-    
     await connection.confirmTransaction(signature, 'processed');
 
-    const body = {
-      'url': userImageUrl,
-      'prompt': userPrompt,
-      'wallet': publicKey.toBase58(),
-      'uid': String(uid),
-    }
+    nftMintReq( String(userImageUrl), String(userPrompt), String(publicKey.toBase58()), String(uid))
 
   }, [publicKey, sendTransaction, connection]);
 

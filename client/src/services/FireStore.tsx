@@ -44,3 +44,18 @@ export const fetchContest = async (
       });
     });
 };
+
+export const nftMintReq = async ( url: string, prompt: string, wallet: string, uid: string ) => {
+  const BEUrl = 'https://us-central1-trinity-f4908.cloudfunctions.net/nftMintReq';
+  const config = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'no-cors'
+    },
+    body: JSON.stringify({url: url, prompt: prompt, wallet: wallet, uid: uid})
+  };
+  const response = await fetch(BEUrl, config);
+  const { res } = await response.json();
+  return res;
+};
