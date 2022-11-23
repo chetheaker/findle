@@ -8,9 +8,11 @@ import ImagesContainer from '../ImagesContainer/ImagesContainer';
 import Timer from '../Timer/Timer';
 
 // dev
-import MintModal from '../MintModal/MintModal';
+import ShareModal from '../ShareModal/ShareModal';
 
-function Contest() {
+function Contest( user: any ) {
+
+  const [ openModal, setOpenModal ] = useState(true);
   const [isFetching, setIsFetching] = useState(true);
   const [contest, setContest] =
     useState<firebase.firestore.DocumentData | null>(null);
@@ -32,11 +34,13 @@ function Contest() {
 
   if (isFetching || !contest) return <Spinner />;
 
-  let isOpenMint = true;
+  function onClose() {
+    setOpenModal(false);
+  }
 
   return (
     <div className="contest">
-      <MintModal isOpen={isOpenMint} onClose={() => { isOpenMint = false }} prompt='test promt' inputs='' promptArray={[]} complete={true} />
+      <ShareModal isOpen={openModal} onClose={onClose} prompt='mint my nft' inputs='' promptArray={[]} complete={true} />
       {contest.createdAt && <Timer creationDate={contest.createdAt} />}
       <ImagesContainer
         images={contest.images}

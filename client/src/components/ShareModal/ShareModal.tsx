@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../services/fireBaseInit';
 import SignIn from '../SignIn/SignIn';
+import MintButton from '../MintButton/MintButton';
 
 type ShareProps = {
   isOpen: boolean;
@@ -75,9 +76,14 @@ const ShareModal = ({
     if (user && isGenerating) {
       generateUserImage(userPromptArray.join(' '));
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [complete, auth]);
+
+  const mintButtonParams = {
+    'uid': user?.uid,
+    'userImageUrl': userImageUrl,
+    'userPrompt': userPrompt,
+  }
 
   return (
     <Modal onClose={onClose} size="xl" isOpen={isOpen}>
@@ -133,6 +139,7 @@ const ShareModal = ({
           </div>
         </ModalBody>
         <ModalFooter>
+          <MintButton uid={String(user?.uid)} userImageUrl={userImageUrl} userPrompt={userPrompt} />
           <div className="modal-time">Next [GAMENAME] in [TIME]</div>
         </ModalFooter>
       </ModalContent>
