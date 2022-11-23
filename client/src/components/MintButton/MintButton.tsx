@@ -41,7 +41,7 @@ function MintButton ( { uid, userImageUrl, userPrompt }: MintButtonProps ) {
 
     nftMintReq( String(userImageUrl), String(userPrompt), String(publicKey.toBase58()), String(uid))
 
-  }, [publicKey, sendTransaction, connection]);
+  }, [connection, publicKey, sendTransaction, uid, userImageUrl, userPrompt]);
 
   return (
     <button className="mint-button" onClick={onClick}>MINT YOUR NFT</button>

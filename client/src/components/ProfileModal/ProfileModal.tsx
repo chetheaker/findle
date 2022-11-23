@@ -11,9 +11,7 @@ import {
 } from '@chakra-ui/react';
 import './ProfileModal.css'
 import { useContext, useEffect, useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { CgProfile } from 'react-icons/cg';
-import { auth } from '../../services/fireBaseInit';
 import SignOut from '../SignOut/SignOut';
 import ProfileContext from '../../ProfileContext';
 
@@ -22,7 +20,6 @@ type Props = {
 };
 
 const ProfileModal: React.FC<Props> = ({ darkMode }) => {
-  const [user] = useAuthState(auth as any);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [stats] = useContext(ProfileContext);
   const [topscore, setTopscore] = useState(0);

@@ -5,17 +5,11 @@ import firebase from 'firebase/compat/app';
 import Spinner from '../Spinner/Spinner';
 import PromptsContainer from '../PromptsContainer/PromptsContainer';
 import ImagesContainer from '../ImagesContainer/ImagesContainer';
-import Timer from '../Timer/Timer';
-
-// dev
-import ShareModal from '../ShareModal/ShareModal';
 
 function Contest( user: any ) {
 
-  const [ openModal, setOpenModal ] = useState(true);
   const [isFetching, setIsFetching] = useState(true);
-  const [contest, setContest] =
-    useState<firebase.firestore.DocumentData | null>(null);
+  const [contest, setContest] = useState<firebase.firestore.DocumentData | null>(null);
 
   const [guessCount, setGuessCount] = useState(
     Number(localStorage.getItem('guessCount')) || 0

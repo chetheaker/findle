@@ -109,12 +109,6 @@ const ShareModal = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [complete, auth]);
 
-  const mintButtonParams = {
-    'uid': user?.uid,
-    'userImageUrl': userImageUrl,
-    'userPrompt': userPrompt,
-  }
-
   return (
     <Modal onClose={onClose} size="xl" isOpen={isOpen}>
       <ModalOverlay />
