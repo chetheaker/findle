@@ -12,6 +12,7 @@ import { DocumentData } from 'firebase/firestore';
 import { createUserStats, getUserStats } from './services/FireStore';
 
 function App() {
+  
   const theme = extendTheme({
     components: {
       Modal: {

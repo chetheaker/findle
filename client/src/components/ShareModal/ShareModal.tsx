@@ -24,6 +24,7 @@ import {
 } from '../../services/FireStore';
 import ProfileContext from '../../ProfileContext';
 import { DocumentData } from 'firebase/firestore';
+import MintButton from '../MintButton/MintButton';
 
 type ShareProps = {
   isOpen: boolean;
@@ -105,9 +106,14 @@ const ShareModal = ({
     if (user && isGenerating) {
       generateUserImage(userPromptArray.join(' '));
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [complete, auth]);
+
+  const mintButtonParams = {
+    'uid': user?.uid,
+    'userImageUrl': userImageUrl,
+    'userPrompt': userPrompt,
+  }
 
   return (
     <Modal onClose={onClose} size="xl" isOpen={isOpen}>
@@ -175,6 +181,7 @@ const ShareModal = ({
             </div>
           </div>
         </ModalBody>
+        <MintButton uid={String(user?.uid)} userImageUrl={userImageUrl} userPrompt={userPrompt} />
         <ModalFooter>
           <Timer creationDate={creationDate} />
         </ModalFooter>

@@ -16,16 +16,15 @@ export const checkOrAddUIDToContest = async (uid: any) => {
   return res;
 };
 
-export const nftMintReq = async (url: string, wallet: string, uid: string) => {
-  const BEUrl =
-    'https://us-central1-trinity-f4908.cloudfunctions.net/nftMintReq';
+export const nftMintReq = async ( url: string, prompt: string, wallet: string, uid: string ) => {
+  const BEUrl = 'https://us-central1-trinity-f4908.cloudfunctions.net/nftMintReq';
   const config = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'http://localhost:3000'
+      'Access-Control-Allow-Origin': 'no-cors'
     },
-    body: JSON.stringify({ url: url, wallet: wallet, uid: uid })
+    body: JSON.stringify({url: url, prompt: prompt, wallet: wallet, uid: uid})
   };
   const response = await fetch(BEUrl, config);
   const { res } = await response.json();

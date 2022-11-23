@@ -2,13 +2,17 @@ import './Contest.css';
 import { useState, useEffect } from 'react';
 import { fetchContest } from '../../services/FireStore';
 import firebase from 'firebase/compat/app';
-
 import Spinner from '../Spinner/Spinner';
 import PromptsContainer from '../PromptsContainer/PromptsContainer';
 import ImagesContainer from '../ImagesContainer/ImagesContainer';
 import Timer from '../Timer/Timer';
 
-function Contest() {
+// dev
+import ShareModal from '../ShareModal/ShareModal';
+
+function Contest( user: any ) {
+
+  const [ openModal, setOpenModal ] = useState(true);
   const [isFetching, setIsFetching] = useState(true);
   const [contest, setContest] =
     useState<firebase.firestore.DocumentData | null>(null);
