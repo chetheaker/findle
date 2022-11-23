@@ -7,16 +7,14 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  useDisclosure,
-  Spinner
+  useDisclosure
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { CgProfile } from 'react-icons/cg';
 import { auth } from '../../services/fireBaseInit';
 import SignOut from '../SignOut/SignOut';
-import { createUserStats, getUserStats } from '../../services/FireStore';
-import { DocumentData } from 'firebase/firestore';
+import ProfileContext from '../../ProfileContext';
 
 type Props = {
   darkMode: boolean;
@@ -24,22 +22,9 @@ type Props = {
 
 const ProfileModal: React.FC<Props> = ({ darkMode }) => {
   const [user] = useAuthState(auth as any);
-  const [isLoading, setIsLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [stats, setStats] = useState<DocumentData>({});
+  const [stats] = useContext(ProfileContext);
   const size = 'xl';
-
-  useEffect(() => {
-    const handleStats = async () => {
-      const userStats = (await getUserStats(user!.uid)) as DocumentData;
-      setStats(userStats);
-      if (!userStats) {
-        await createUserStats(user!.uid);
-      }
-      setIsLoading(false);
-    };
-    handleStats();
-  }, [user]);
 
   return (
     <>
@@ -48,29 +33,25 @@ const ProfileModal: React.FC<Props> = ({ darkMode }) => {
           <CgProfile color={darkMode ? '#E2E8F0' : 'black'} size="2em" />
         </span>
       </button>
-
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <Modal onClose={onClose} size={size} isOpen={isOpen}>
-          <ModalOverlay />
-          <ModalContent>
-            <SignOut />
-            <ModalHeader>Hello, {user!.displayName!.split(' ')[0]}</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              {Object.entries(stats).map((el) => (
-                <h1>
+      <Modal onClose={onClose} size={size} isOpen={isOpen}>
+        <ModalOverlay />
+        <ModalContent>
+          <SignOut />
+          <ModalHeader>Hello, {user!.displayName!.split(' ')[0]}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {stats &&
+              Object.entries(stats).map((el) => (
+                <h1 key={el[0]}>
                   {el[0]} - {el[1]}
                 </h1>
               ))}
-            </ModalBody>
-            <ModalFooter>
-              <Button onClick={onClose}>Close</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      )}
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
