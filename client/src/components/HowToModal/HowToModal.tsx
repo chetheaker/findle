@@ -28,16 +28,15 @@ const HowToModal: React.FC<Props> = ({ darkMode }) => {
           <ModalCloseButton />
           <ModalBody>
             <div className="modal-body">
-              Trinity gives you a pixelated AI generated image made by DALL-E
-              from Open AI and you have to guess the keywords used in the prompt
-              to generate the image.
+              Findle gives you an AI generated image made by DALL-E
+              from Open AI and you have to guess the keywords.
               <br />
               <br />
               With each guess you get a new image to help you
               guess the prompt.
               <br />
               <br />
-              At the end you will be able to see your own AI generated image if you sign in.
+              At the end you will be able to see your own AI generated image if you sign in, win or lose.
             </div>
           </ModalBody>
         </ModalContent>
