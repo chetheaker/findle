@@ -8,21 +8,31 @@ import WalletButton from '../WalletButton/WalletButton';
 type NavbarProps = {
   setDarkmode: React.Dispatch<React.SetStateAction<boolean>>;
   user: any;
-  darkMode:boolean;
-  setColormode: React.Dispatch<React.SetStateAction<boolean>>
-  colormode: boolean
+  darkMode: boolean;
+  setColormode: React.Dispatch<React.SetStateAction<boolean>>;
+  colormode: boolean;
 };
 
-function Navbar({ user, setDarkmode, darkMode, setColormode, colormode }: NavbarProps) {
-
+function Navbar({
+  user,
+  setDarkmode,
+  darkMode,
+  setColormode,
+  colormode
+}: NavbarProps) {
   return (
     <div className="navbar">
-      <h1>TRINITY</h1>
+      <h1>Findle</h1>
       <WalletButton/>
-      <div className='right'>
+      <div className="right">
         <HowToModal darkMode={darkMode} />
         {user ? <ProfileModal darkMode={darkMode} /> : <SignIn />}
-        <SettingsModal setDarkmode={setDarkmode} darkMode={darkMode} setColormode={setColormode} colormode={colormode} />
+        <SettingsModal
+          setDarkmode={setDarkmode}
+          darkMode={darkMode}
+          setColormode={setColormode}
+          colormode={colormode}
+        />
       </div>
     </div>
   );

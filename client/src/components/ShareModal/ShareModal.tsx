@@ -166,17 +166,13 @@ const ShareModal = ({
                 </div>
               )}
               <div className="bottom">
-                <h2>Prompt: {userPrompt}</h2>
-                <button className="share">
-                  Share
-                  <AiOutlineShareAlt />
-                </button>
+                <h2>{userPrompt}</h2>
               </div>
             </div>
           </div>
+          <MintButton uid={String(user?.uid)} userImageUrl={userImageUrl} userPrompt={userPrompt} />
         </ModalBody>
-        <MintButton uid={String(user?.uid)} userImageUrl={userImageUrl} userPrompt={userPrompt} />
-        <ModalFooter>
+        <ModalFooter justifyContent={'center'}>
           <Timer creationDate={creationDate} />
         </ModalFooter>
       </ModalContent>

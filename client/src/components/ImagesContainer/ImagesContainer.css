@@ -30,7 +30,7 @@
 }
 
 .images-container .thumbnails {
-  width: 90px;
+  width: 92px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,9 +71,10 @@
     justify-content: center;
     align-items: center;
     height: 75%;
+    margin-left: 1rem;
   }
   .images-container .thumbnail {
-    width: 75%;
+    width: 14vw;
     aspect-ratio: 1;
     background-color: #6e7d93;
     border-radius: 0.5rem;
@@ -91,8 +92,11 @@
   .image-cont {
     width: 75vw;
   }
+  .images-container .thumbnails{ 
+    margin-left: 0;
+  }
   .images-container .thumbnail {
-    width: 60%;
+    width: 13vw;
   }
   .images-container {
     gap:0;
