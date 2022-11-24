@@ -1,0 +1,16 @@
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userBalance {
+  color: white;
+  padding: 1rem;
+  font-size: 1rem;
+}
+@media(max-width: 600px) {
+  .btnContainer {
+    display: none;
+  }
+}

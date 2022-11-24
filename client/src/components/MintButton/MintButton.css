@@ -1,0 +1,17 @@
+.mint-button {
+  padding: 1rem;
+  margin: 1rem;
+  border: 1px solid white;
+  border-radius: 1rem;
+}
+
+.mint-button:hover {
+  transform: scale(1.05);
+  border: 1px solid white;
+  border-radius: 2rem;
+}
+@media(max-width: 600px) {
+  .mint-button  {
+    display: none;
+  }
+}
