@@ -15,7 +15,7 @@ const corsHandler = cors({ origin: true });
 
 exports.scheduledFunction = functions.pubsub
   .schedule('59 23 * * 1-7')
-  .onRun((context) => {
+  .onRun(async (context) => {
     //CLOUDINARY MODULE
     const upload2Cloudinary = async (aiUrl: string) => {
       const url = process.env.CLOUDINARY_URL as string;
@@ -48,35 +48,42 @@ exports.scheduledFunction = functions.pubsub
     };
 
     async function contestGeneration() {
-      const currentContestRef = await firestore.collection('currentContest');
-      const pendingContestRef = await firestore.collection('pendingContests');
-      const finishedContestsRef = await firestore.collection(
-        'finishedContests'
-      );
+      const currentContestRef = firestore.collection('currentContest');
+      const pendingContestRef = firestore.collection('pendingContests');
+      const finishedContestsRef = firestore.collection('finishedContests');
+
       const result: DocumentData[] = [];
-
-      const QuerySnapshot = await pendingContestRef.limit(1).get();
-      QuerySnapshot.forEach((element: { data: () => any; id: any }) => {
-        let data = element.data();
-        data.id = element.id;
-        result.push(data);
-        return data;
-      });
-
+      console.log("running2")
+      try {
+        const QuerySnapshot = await pendingContestRef.limit(1).get();
+        console.log("running 2.5")
+        QuerySnapshot.forEach((element: { data: () => any; id: any }) => {
+          let data = element.data();
+          data.id = element.id;
+          result.push(data);
+          return data;
+        });
+      } catch (error) {
+        console.log(error)
+      }
+      console.log("running3")
       interface CloudinaryData {
         secure_url: string;
       }
       //GENERATE 5 IMAGES BASED ON PROMPT AND SAVE URLS INTO ARRAY
       let cdnImages: string[] = [];
       let prompt = result[0].solutionPrompt;
-
+      console.log("running4")
       for (let i = 0; i < 5; i++) {
-        let openAIURL = (await openAIGeneration(prompt)) as string;
-        let cloudinaryImgData = (await upload2Cloudinary(
+        let openAIURL = await openAIGeneration(prompt) as string;
+        console.log("downloaded from OAI")
+        let cloudinaryImgData = await upload2Cloudinary(
           openAIURL
-        )) as unknown as CloudinaryData;
+        ) as unknown as CloudinaryData;
+        console.log("sent to CDNR")
         cdnImages.push(cloudinaryImgData.secure_url);
       }
+      console.log("running5")
 
       const currentResult: DocumentData[] = [];
       const QuerySnapshot2 = await currentContestRef.limit(1).get();
@@ -95,7 +102,7 @@ exports.scheduledFunction = functions.pubsub
         keywords: result[0].keywords,
         uids: []
       };
-
+      console.log("running6")
       await currentContestRef.add(newContest);
       const idToDelete = result[0].id;
 
@@ -103,9 +110,14 @@ exports.scheduledFunction = functions.pubsub
       await currentContestRef.doc(currentResult[0].id).delete();
 
       await pendingContestRef.doc(idToDelete).delete();
+      console.log("running7")
       return null;
     }
-    contestGeneration();
+    try {
+      await contestGeneration();
+    } catch (error) {
+        console.log(error)
+    }
     return 1;
   });
 
