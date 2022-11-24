@@ -1,11 +1,12 @@
 import { getOrCreateAssociatedTokenAccount, createTransferInstruction } from "@solana/spl-token";
 import { Connection, Keypair, PublicKey, sendAndConfirmTransaction, Transaction } from "@solana/web3.js";
-​
+​//import { secret } from './keypair';
+
 const secret = [4, 58, 161, 182, 185, 42, 208, 25, 189, 53, 91, 18, 153, 38, 17, 208, 238, 252, 229, 74, 113, 124, 184, 22, 20, 41, 112, 222, 103, 36, 4, 53, 7, 84, 97, 87, 88, 109, 49, 183, 87, 144, 123, 212, 59, 189, 34, 81, 164, 130, 35, 91, 112, 78, 166, 194, 211, 87, 193, 242, 219, 255, 178, 193];
 
-
-const QUICKNODE_RPC = 'https://warmhearted-winter-river.solana-devnet.discover.quiknode.pro/f0a750831d453a3e404bfcd2017bbe0f601242a3/';
-const SOLANA_CONNECTION = new Connection(QUICKNODE_RPC);
+// const QUICKNODE_RPC = process.env.QUICKNODE_URL
+const QUICKNODE_URL = "https://dry-nameless-moon.solana-mainnet.discover.quiknode.pro/f61fa4c0c62f358f4b77346ad4faa84f8742ed73/"
+const SOLANA_CONNECTION = new Connection(QUICKNODE_URL);
 ​
 const WALLET = Keypair.fromSecretKey(new Uint8Array(secret));
 const TRANSFER_AMOUNT = 1;
@@ -61,7 +62,7 @@ async function sendToken( destination: string, token: any ) {
   console.log(
       '\x1b[32m', //Green Text
       `   Transaction Success!🎉`,
-      `\n    https://explorer.solana.com/tx/${signature}?cluster=devnet`
+      `\n    https://explorer.solana.com/tx/${signature}?cluster=${process.env.NET}`
   );
 ​
 }
