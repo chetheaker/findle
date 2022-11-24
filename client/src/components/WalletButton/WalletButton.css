@@ -9,3 +9,8 @@
   padding: 1rem;
   font-size: 1rem;
 }
+@media(max-width: 600px) {
+  .btnContainer {
+    display: none;
+  }
+}

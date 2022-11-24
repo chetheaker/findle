@@ -10,3 +10,8 @@
   border: 1px solid white;
   border-radius: 2rem;
 }
+@media(max-width: 600px) {
+  .mint-button  {
+    display: none;
+  }
+}
