@@ -102,6 +102,6 @@ export default async function mintFN(input: any) {
   // Step 4 - Send token to client
   console.log("input.wallet:", input.wallet)
   console.log("HEREEEEE, res.addres:", res.address)
-  await sendToken(String(input.wallet), String(res.address))
+  await sendToken(String(input.wallet), res.address)
   return true;
 }

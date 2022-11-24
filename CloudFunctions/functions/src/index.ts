@@ -74,14 +74,22 @@ exports.scheduledFunction = functions.pubsub
       let cdnImages: string[] = [];
       let prompt = result[0].solutionPrompt;
       console.log("running4")
+      let tries = 0;
       for (let i = 0; i < 5; i++) {
-        let openAIURL = await openAIGeneration(prompt) as string;
-        console.log("downloaded from OAI")
-        let cloudinaryImgData = await upload2Cloudinary(
-          openAIURL
-        ) as unknown as CloudinaryData;
-        console.log("sent to CDNR")
-        cdnImages.push(cloudinaryImgData.secure_url);
+        try {
+          let openAIURL = await openAIGeneration(prompt) as string;
+          console.log("downloaded from OAI")
+          let cloudinaryImgData = await upload2Cloudinary(
+            openAIURL
+          ) as unknown as CloudinaryData;
+          console.log("sent to CDNR")
+          cdnImages.push(cloudinaryImgData.secure_url);
+        } catch (error) {
+          console.log(error)
+          i = i - 1;
+          tries++
+          if (tries >10) break
+        }
       }
       console.log("running5")
 

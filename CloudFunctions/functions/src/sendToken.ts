@@ -10,7 +10,7 @@ const SOLANA_CONNECTION = new Connection(QUICKNODE_RPC);
 const WALLET = Keypair.fromSecretKey(new Uint8Array(secret));
 const TRANSFER_AMOUNT = 1;
 ​
-async function sendToken( destination: string, token: string ) {
+async function sendToken( destination: string, token: any ) {
 ​
   console.log(`Sending ${TRANSFER_AMOUNT} ${(token)} from ${(WALLET.publicKey.toString())} to ${(destination)}.`)
   
@@ -26,14 +26,19 @@ async function sendToken( destination: string, token: string ) {
 ​
   //Step 2
   console.log(`2 - Getting Destination Token Account`);
-  
-  let destinationAccount = await getOrCreateAssociatedTokenAccount(
-      SOLANA_CONNECTION, 
-      WALLET,
-      new PublicKey(token),
-      new PublicKey(destination)
-  );
-  console.log(`    Destination Account: ${destinationAccount.address.toString()}`);
+  let destinationAccount: any;
+  try {
+        destinationAccount = await getOrCreateAssociatedTokenAccount(
+        SOLANA_CONNECTION, 
+        WALLET,
+        new PublicKey(token),
+        new PublicKey(destination)
+    );
+    console.log(`    Destination Account: ${destinationAccount.address.toString()}`);
+    
+  } catch (error) {
+    console.log(error)
+  }
 ​
   //Step 3
   console.log(`3 - Fetching Number of Decimals for Mint: ${token}`);
