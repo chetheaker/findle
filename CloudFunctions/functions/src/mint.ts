@@ -2,21 +2,15 @@
 /* eslint-disable max-len */
 import axios from 'axios';
 import sendToken from "./sendToken";
-​//import { secret } from './keypair';
 import {Buffer} from 'buffer';
 import {Connection, Keypair, PublicKey} from '@solana/web3.js';
 import {Metaplex, keypairIdentity, bundlrStorage, toMetaplexFile, toBigNumber} from '@metaplex-foundation/js';
-//import * as fs from 'fs';
 
 
 const secret = [4, 58, 161, 182, 185, 42, 208, 25, 189, 53, 91, 18, 153, 38, 17, 208, 238, 252, 229, 74, 113, 124, 184, 22, 20, 41, 112, 222, 103, 36, 4, 53, 7, 84, 97, 87, 88, 109, 49, 183, 87, 144, 123, 212, 59, 189, 34, 81, 164, 130, 35, 91, 112, 78, 166, 194, 211, 87, 193, 242, 219, 255, 178, 193];
-// const QUICKNODE_RPC = process.env.QUICKNODE_URL;
 const QUICKNODE_URL = "https://dry-nameless-moon.solana-mainnet.discover.quiknode.pro/f61fa4c0c62f358f4b77346ad4faa84f8742ed73/"
-
 const SOLANA_CONNECTION = new Connection(QUICKNODE_URL as string);
-
 const WALLET = Keypair.fromSecretKey(new Uint8Array(secret));
-
 const METAPLEX = Metaplex.make(SOLANA_CONNECTION)
     .use(keypairIdentity(WALLET))
     .use(bundlrStorage({
@@ -100,10 +94,8 @@ export default async function mintFN(input: any) {
   const metadataUri = await uploadMetadata(imgUri, CONFIG.imgType, CONFIG.imgName, input.prompt, CONFIG.attributes);
   // Step 3 - Mint NFT
   const res = await mintNft(metadataUri, CONFIG.imgName, CONFIG.sellerFeeBasisPoints, CONFIG.symbol, CONFIG.creators);
-  console.log("res:", res);
   // Step 4 - Send token to client
-  console.log("input.wallet:", input.wallet)
-  console.log("HEREEEEE, res.addres:", res.address)
-  await sendToken(String(input.wallet), res.address)
+  const transaction = await sendToken(String(input.wallet), res.address);
+  console.log("TX RESULT:", transaction)
   return true;
 }

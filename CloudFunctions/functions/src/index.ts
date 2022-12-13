@@ -10,12 +10,15 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 const firestore = admin.firestore();
 const corsHandler = cors({ origin: true });
+const { Bot } = require("grammy");
+
+const bot = new Bot(String(process.env.TLGR_BOT_KEY));
 
 
 
 exports.scheduledFunction = functions.pubsub
   .schedule('59 23 * * 1-7')
-  .onRun(async (context) => {
+  .onRun(async (context: any) => {
     //CLOUDINARY MODULE
     const upload2Cloudinary = async (aiUrl: string) => {
       const url = process.env.CLOUDINARY_URL as string;
@@ -83,6 +86,7 @@ exports.scheduledFunction = functions.pubsub
             openAIURL
           ) as unknown as CloudinaryData;
           console.log("sent to CDNR")
+          bot.api.sendMessage(Number(process.env.TLGR_GROUP_ID), `Created a new image @ ${cloudinaryImgData.secure_url}`)
           cdnImages.push(cloudinaryImgData.secure_url);
         } catch (error) {
           console.log(error)
@@ -130,26 +134,33 @@ exports.scheduledFunction = functions.pubsub
   });
 
 //HTTP CONTEST GENERATOR THROUGH POST
-exports.createContest = functions.https.onRequest((request, response) => {
+exports.createContest = functions.https.onRequest(async (request: any, response: any) => {
   if (request.body.password === process.env.ADMIN_POST_PW) {
     const pendingContestsRef = firestore.collection('pendingContests');
     let images = ['', '', '', '', ''];
-    pendingContestsRef.add({
-      expirationDate: Date.now() + 8.64e7,
-      createdAt: Date.now(),
-      images: images,
-      solutionPrompt: request.body.prompt,
-      keywords: request.body.keywords,
-      uids: []
-    });
+    try {
+        await pendingContestsRef.add({
+        expirationDate: Date.now() + 8.64e7,
+        createdAt: Date.now(),
+        images: images,
+        solutionPrompt: request.body.prompt,
+        keywords: request.body.keywords,
+        uids: []
+      });
+      
+      bot.api.sendMessage(Number(process.env.TLGR_GROUP_ID), `Successfully created a new contest with promp \n\n'${request.body.prompt}'\n\n and keywords \n\n'${request.body.keywords.map((e: any)=>{return e.word})}'`)
+    } catch (error) {
+      bot.api.sendMessage(Number(process.env.TLGR_GROUP_ID), `Error creating a new contest with promp \n\n'${request.body.prompt}'\n\n and keywords \n\n'${request.body.keywords.map((e: any)=>{return e.word})}'\n\n with error: \n\n'${error}'`)
+    }
     response.send(true);
   } else {
+    bot.api.sendMessage(Number(process.env.TLGR_GROUP_ID), `Creation of contest with promp '${request.body.prompt}' failed due to wrong password @ POST request`)
     response.send(false);
   }
 });
 
 //HTTP USER ID CHECKUP
-exports.checkUID = functions.https.onRequest(async (request, response) => {
+exports.checkUID = functions.https.onRequest(async (request: any, response: any) => {
   corsHandler(request, response, () => {
     async function runSelf() {
       response.set('Access-Control-Allow-Origin', '*');
@@ -171,6 +182,7 @@ exports.checkUID = functions.https.onRequest(async (request, response) => {
         await currentContestRef.doc(currentResult[0].id).update({
           uids: admin.firestore.FieldValue.arrayUnion(request.body.uid)
         });
+        bot.api.sendMessage(Number(process.env.TLGR_GROUP_ID), `User with UID ${request.body.uid} has successfully requested a unique image!`)
         response.send({ res: true });
       }
     }
@@ -179,7 +191,7 @@ exports.checkUID = functions.https.onRequest(async (request, response) => {
 });
 
 //NFT MINTING
-exports.nftMintReq = functions.https.onRequest(async (request, response) => {
+exports.nftMintReq = functions.https.onRequest(async (request: any, response: any) => {
   corsHandler(request, response, () => {
     async function runSelf() {
       response.set('Access-Control-Allow-Origin', '*');
