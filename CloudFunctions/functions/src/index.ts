@@ -56,10 +56,8 @@ exports.scheduledFunction = functions.pubsub
       const finishedContestsRef = firestore.collection('finishedContests');
 
       const result: DocumentData[] = [];
-      console.log("running2")
       try {
         const QuerySnapshot = await pendingContestRef.limit(1).get();
-        console.log("running 2.5")
         QuerySnapshot.forEach((element: { data: () => any; id: any }) => {
           let data = element.data();
           data.id = element.id;
@@ -69,34 +67,31 @@ exports.scheduledFunction = functions.pubsub
       } catch (error) {
         console.log(error)
       }
-      console.log("running3")
       interface CloudinaryData {
         secure_url: string;
       }
       //GENERATE 5 IMAGES BASED ON PROMPT AND SAVE URLS INTO ARRAY
       let cdnImages: string[] = [];
       let prompt = result[0].solutionPrompt;
-      console.log("running4")
       let tries = 0;
       for (let i = 0; i < 5; i++) {
         try {
           let openAIURL = await openAIGeneration(prompt) as string;
-          console.log("downloaded from OAI")
           let cloudinaryImgData = await upload2Cloudinary(
             openAIURL
           ) as unknown as CloudinaryData;
-          console.log("sent to CDNR")
           bot.api.sendMessage(Number(process.env.TLGR_GROUP_ID), `Created a new image @ ${cloudinaryImgData.secure_url}`)
           cdnImages.push(cloudinaryImgData.secure_url);
         } catch (error) {
-          console.log(error)
+          console.log(`Try ${tries}, error:\n `,error);
           i = i - 1;
           tries++
-          if (tries >10) break
+          if (tries >10) {
+            bot.api.sendMessage(Number(process.env.TLGR_GROUP_ID), `Failed to create images. OpenAI failed to respond over 10 times.`);
+            break;
+          }
         }
       }
-      console.log("running5")
-
       const currentResult: DocumentData[] = [];
       const QuerySnapshot2 = await currentContestRef.limit(1).get();
       QuerySnapshot2.forEach((element: { data: () => any; id: any }) => {
@@ -114,21 +109,18 @@ exports.scheduledFunction = functions.pubsub
         keywords: result[0].keywords,
         uids: []
       };
-      console.log("running6")
       await currentContestRef.add(newContest);
       const idToDelete = result[0].id;
-
       await finishedContestsRef.add(...currentResult);
       await currentContestRef.doc(currentResult[0].id).delete();
-
       await pendingContestRef.doc(idToDelete).delete();
-      console.log("running7")
       return null;
     }
     try {
       await contestGeneration();
     } catch (error) {
         console.log(error)
+        bot.api.sendMessage(Number(process.env.TLGR_GROUP_ID), `Failed to create a new contest. Error: \n ${error}`);
     }
     return 1;
   });
@@ -199,8 +191,15 @@ exports.nftMintReq = functions.https.onRequest(async (request: any, response: an
       // DATA EVAL
       if (request.body.uid && request.body.url && request.body.wallet) {
         //MINTING PROCESS
-        await mintFN(request.body);
-        response.send({ res: true });
+        bot.api.sendMessage(Number(process.env.TLGR_GROUP_ID), `User with UID ${request.body.uid} has successfully requested a minting of an NFT with image ${request.body.url} and wallet ${request.body.wallet}!`);
+        try {
+          await mintFN(request.body);
+          response.send({ res: true });
+        } catch (error) {
+          console.log(error);
+          bot.api.sendMessage(Number(process.env.TLGR_GROUP_ID), `User with UID ${request.body.uid} has failed to mint an NFT with image ${request.body.url} and wallet ${request.body.wallet}. Error: ${error}`);
+          response.send({ res: false });
+        }
       } else {
         response.send({ res: false });
       }
